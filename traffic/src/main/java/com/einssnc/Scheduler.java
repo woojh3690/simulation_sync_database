@@ -6,9 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.einssnc.dao.LinkDao;
+import com.einssnc.dao.MultilinkDao;
 import com.einssnc.dao.NationWideSpeedDao;
 import com.einssnc.dao.NodeDao;
+import com.einssnc.dao.RealTimeTrafficJejuDao;
 import com.einssnc.dao.TurninfoDao;
+import com.einssnc.model.RealTimeTrafficJejuId;
+import com.einssnc.updater.LinkUpdater;
+import com.einssnc.updater.MultiLinkUpdater;
 import com.einssnc.updater.NationWideSpeedDBUpdate;
 import com.einssnc.updater.NodeUpdater;
 import com.einssnc.updater.TurnInfoUpdater;
@@ -26,20 +32,58 @@ public class Scheduler {
 	
 	@Autowired
 	private TurninfoDao turnDao;
+	
+	@Autowired
+	private LinkDao linkDao;
+	
+	@Autowired
+	private MultilinkDao multiDao;
+	
+	@Autowired
+	private RealTimeTrafficJejuDao trafficJejuDao;
+	
+	NodeUpdater nodeUpdater;
+	TurnInfoUpdater turnInfoUpdater;
+	LinkUpdater linkUpdater;
+	MultiLinkUpdater multiUpdater;
+	
+	
+	public Scheduler() {
+		
+	}
+	
+	private void init() {
+		nodeUpdater = new NodeUpdater(nodeDao);
+		turnInfoUpdater = new TurnInfoUpdater(turnDao, nodeUpdater);
+		linkUpdater = new LinkUpdater(linkDao, nodeUpdater);
+		multiUpdater = new MultiLinkUpdater(multiDao, linkUpdater);
+	}
     
-	@Scheduled(fixedDelay=1000 * 60 * 60 * 60 * 60)//(cron = "0 0/30 8-20 * * *")//(fixedDelay=1000 * 60 * 60)//(cron = "30 * * * * *")
-	public void alarm() {
-//		System.out.println("시작");
+	@Scheduled(fixedDelay=1000 * 60 * 60 * 60 * 60)//(cron = "0 0/30 8-20 * * *")
+	public void asynchronousScheduler() {
+		System.out.println("비동기 스케줄러 시작");
+		init();
+//		updater.saveData(nodeDao, baseUrl + "node.csv", nodeDao);
+//		turnInfoUpdater.saveData(turnDao, baseUrl + "turninfo.csv", nodeDao);
+		linkUpdater.saveData(baseUrl + "link2.csv");
+//		multiUpdater.saveData(multiDao, baseUrl + "multilink.csv", nodeDao);
+		
+		System.out.println("비동기 스케줄러 완료");
+	}
+	
+//	@Scheduled(cron = "0 1 * * *") //매일 1시에 작동
+//	public void dayScheduler() {
+//		System.out.println("하루 업데이트 스케줄러 시작");
+//		
 //		Calendar date = Calendar.getInstance();
 //		date.set(2019, 4, 14);
-//		NationWideSpeedDBUpdate nation = new NationWideSpeedDBUpdate("C:/Temp", "nationWideSpeedData.zip");
-//		nation.saveData(nationDao, "C:/Temp" + "//" + "20180305" + "_5Min.csv");
-		
-//		NodeUpdater updater = new NodeUpdater();
-//		updater.saveData(nodeDao, baseUrl + "node.csv");
-//		System.out.println("끝");
-		
-		TurnInfoUpdater turnInfoUpdater = new TurnInfoUpdater();
-		turnInfoUpdater.saveData(turnDao, baseUrl + "turninfo.csv");
-	}
+//		NationWideSpeedDBUpdate nation = new NationWideSpeedDBUpdate(
+//				nationDao, 
+//				linkUpdater, 
+//				"C:/Temp", 
+//				"nationWideSpeedData.zip");
+//		nation.updateAllData();
+//		
+//		System.out.println("하루 업데이트 스케줄러 완료");
+//	}
 }

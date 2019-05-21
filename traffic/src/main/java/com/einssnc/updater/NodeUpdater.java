@@ -1,12 +1,19 @@
 package com.einssnc.updater;
 
+import com.einssnc.dao.NodeDao;
 import com.einssnc.model.Node;
 
 public class NodeUpdater 
-	implements AsynchronousUpdater<Node, String> {
+	implements AsynchronousUpdater {
+	
+	NodeDao nodeDao;
+	
+	public NodeUpdater(NodeDao nodeDao) {
+		this.nodeDao = nodeDao;
+	}
 
 	@Override
-	public Node buildBean(String[] str) {
+	public void buildBean(String[] str, int i) {
 		Node entity = new Node();
 		entity.setNodeId(str[0]);
 		entity.setNodeType(str[1]);
@@ -19,6 +26,15 @@ public class NodeUpdater
 		entity.setStnlReg(strToInteger(str[8]));
 		entity.setTmpid(str[9]);
 		entity.setUploadId(str[10]);
-		return entity;
 	}
+
+	@Override
+	public void buildBack(String str) {
+		Node node = new Node();
+		node.setNodeId(str);
+		node.setNodeType("-1");
+		node.setNodeName("-");
+		nodeDao.save(node);
+	}
+
 }

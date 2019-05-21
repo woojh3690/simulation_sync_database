@@ -1,14 +1,28 @@
 package com.einssnc.updater;
 
+import java.util.Arrays;
+
+import org.springframework.dao.DataIntegrityViolationException;
+
+import com.einssnc.updater.NodeUpdater;
+import com.einssnc.dao.TurninfoDao;
 import com.einssnc.model.Turninfo;
 import com.einssnc.model.TurninfoId;
 
 public class TurnInfoUpdater
-	implements AsynchronousUpdater<Turninfo, Integer> {
+	implements AsynchronousUpdater {
+	
+	TurninfoDao turnDao;
+	NodeUpdater updater;
+	
+	public TurnInfoUpdater(TurninfoDao turnDao, NodeUpdater updater) {
+		this.turnDao = turnDao;
+		this.updater = updater;
+	}
+
 
 	@Override
-	public Turninfo buildBean(String[] str) {
-		
+	public void buildBean(String[] str, int i) {
 		TurninfoId id = new TurninfoId();
 		id.setNodeId(str[0]);
 		id.setTurnId(strToInteger(str[1]));
@@ -20,6 +34,21 @@ public class TurnInfoUpdater
 		entity.setTurnType(str[4]);
 		entity.setTurnOper(strToChar(str[5]));
 		entity.setRemark(str[6]);
-		return entity;
+		
+		try {
+			turnDao.save(entity);
+		} catch (DataIntegrityViolationException e) {
+			System.out.println(i 
+					+ " 에서 오류" 
+					+ Arrays.toString(str));
+			updater.buildBack(str[0]);
+			turnDao.save(entity);
+		}
+	}
+
+	@Override
+	public void buildBack(String str) {
+		// TODO Auto-generated method stub
+		
 	}
 }

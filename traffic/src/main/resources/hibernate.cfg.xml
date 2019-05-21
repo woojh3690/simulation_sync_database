@@ -9,5 +9,7 @@
         <property name="hibernate.connection.url">jdbc:mysql://wooserver.iptime.org/simulation?serverTimezone=UTC</property>
         <property name="hibernate.connection.username">woojh3690</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        
+        <property name="hibernate.show_sql">true</property>
     </session-factory>
 </hibernate-configuration>

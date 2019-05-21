@@ -1,10 +1,12 @@
 package com.einssnc.model;
-// Generated 2019. 5. 20 ���� 4:14:02 by Hibernate Tools 5.2.12.Final
+// Generated 2019. 5. 21 ���� 10:28:14 by Hibernate Tools 5.2.12.Final
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "multilink", catalog = "simulation")
 public class Multilink implements java.io.Serializable {
 
-	private int multiId;
+	private MultilinkId id;
 	private Link link;
 	private String roadRank;
 	private String roadType;
@@ -27,14 +29,14 @@ public class Multilink implements java.io.Serializable {
 	public Multilink() {
 	}
 
-	public Multilink(int multiId, Link link) {
-		this.multiId = multiId;
+	public Multilink(MultilinkId id, Link link) {
+		this.id = id;
 		this.link = link;
 	}
 
-	public Multilink(int multiId, Link link, String roadRank, String roadType, String roadNo, String roadName,
+	public Multilink(MultilinkId id, Link link, String roadRank, String roadType, String roadNo, String roadName,
 			String remark) {
-		this.multiId = multiId;
+		this.id = id;
 		this.link = link;
 		this.roadRank = roadRank;
 		this.roadType = roadType;
@@ -43,19 +45,20 @@ public class Multilink implements java.io.Serializable {
 		this.remark = remark;
 	}
 
-	@Id
+	@EmbeddedId
 
-	@Column(name = "multi_id", unique = true, nullable = false)
-	public int getMultiId() {
-		return this.multiId;
+	@AttributeOverrides({ @AttributeOverride(name = "multiId", column = @Column(name = "multi_id", nullable = false)),
+			@AttributeOverride(name = "linkId", column = @Column(name = "link_id", nullable = false, length = 10)) })
+	public MultilinkId getId() {
+		return this.id;
 	}
 
-	public void setMultiId(int multiId) {
-		this.multiId = multiId;
+	public void setId(MultilinkId id) {
+		this.id = id;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "link_id", nullable = false)
+	@JoinColumn(name = "link_id", nullable = false, insertable = false, updatable = false)
 	public Link getLink() {
 		return this.link;
 	}
@@ -73,7 +76,7 @@ public class Multilink implements java.io.Serializable {
 		this.roadRank = roadRank;
 	}
 
-	@Column(name = "road_type", length = 3)
+	@Column(name = "road_type", length = 10)
 	public String getRoadType() {
 		return this.roadType;
 	}

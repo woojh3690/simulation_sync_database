@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 20 ���� 4:14:02 by Hibernate Tools 5.2.12.Final
+// Generated 2019. 5. 21 ���� 10:28:14 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,11 +22,11 @@ public class Link implements java.io.Serializable {
 	private String linkId;
 	private Node nodeByFNode;
 	private Node nodeByTNode;
-	private char roadUse;
-	private int lanes;
+	private Character roadUse;
+	private Integer lanes;
 	private String roadRank;
 	private String roadName;
-	private char multiLink;
+	private Character multiLink;
 	private String connect;
 	private Integer maxSpd;
 	private String restVeh;
@@ -42,23 +42,12 @@ public class Link implements java.io.Serializable {
 	public Link() {
 	}
 
-	public Link(String linkId, Node nodeByFNode, Node nodeByTNode, char roadUse, int lanes, String roadRank,
-			String roadName, char multiLink, String connect, String roadType, String roadNo) {
+	public Link(String linkId) {
 		this.linkId = linkId;
-		this.nodeByFNode = nodeByFNode;
-		this.nodeByTNode = nodeByTNode;
-		this.roadUse = roadUse;
-		this.lanes = lanes;
-		this.roadRank = roadRank;
-		this.roadName = roadName;
-		this.multiLink = multiLink;
-		this.connect = connect;
-		this.roadType = roadType;
-		this.roadNo = roadNo;
 	}
 
-	public Link(String linkId, Node nodeByFNode, Node nodeByTNode, char roadUse, int lanes, String roadRank,
-			String roadName, char multiLink, String connect, Integer maxSpd, String restVeh, Integer restW,
+	public Link(String linkId, Node nodeByFNode, Node nodeByTNode, Character roadUse, Integer lanes, String roadRank,
+			String roadName, Character multiLink, String connect, Integer maxSpd, String restVeh, Integer restW,
 			Integer restH, String remark, String roadType, String roadNo, Set<NationWideSpeed> nationWideSpeeds,
 			Set<Multilink> multilinks, Set<RealTimeTrafficJeju> realTimeTrafficJejus) {
 		this.linkId = linkId;
@@ -94,7 +83,7 @@ public class Link implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "f_node", nullable = false)
+	@JoinColumn(name = "f_node")
 	public Node getNodeByFNode() {
 		return this.nodeByFNode;
 	}
@@ -104,7 +93,7 @@ public class Link implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "t_node", nullable = false)
+	@JoinColumn(name = "t_node")
 	public Node getNodeByTNode() {
 		return this.nodeByTNode;
 	}
@@ -113,25 +102,25 @@ public class Link implements java.io.Serializable {
 		this.nodeByTNode = nodeByTNode;
 	}
 
-	@Column(name = "road_use", nullable = false, length = 1)
-	public char getRoadUse() {
+	@Column(name = "road_use", length = 1)
+	public Character getRoadUse() {
 		return this.roadUse;
 	}
 
-	public void setRoadUse(char roadUse) {
+	public void setRoadUse(Character roadUse) {
 		this.roadUse = roadUse;
 	}
 
-	@Column(name = "lanes", nullable = false)
-	public int getLanes() {
+	@Column(name = "lanes")
+	public Integer getLanes() {
 		return this.lanes;
 	}
 
-	public void setLanes(int lanes) {
+	public void setLanes(Integer lanes) {
 		this.lanes = lanes;
 	}
 
-	@Column(name = "road_rank", nullable = false, length = 3)
+	@Column(name = "road_rank", length = 3)
 	public String getRoadRank() {
 		return this.roadRank;
 	}
@@ -140,7 +129,7 @@ public class Link implements java.io.Serializable {
 		this.roadRank = roadRank;
 	}
 
-	@Column(name = "road_name", nullable = false, length = 50)
+	@Column(name = "road_name", length = 50)
 	public String getRoadName() {
 		return this.roadName;
 	}
@@ -149,16 +138,16 @@ public class Link implements java.io.Serializable {
 		this.roadName = roadName;
 	}
 
-	@Column(name = "multi_link", nullable = false, length = 1)
-	public char getMultiLink() {
+	@Column(name = "multi_link", length = 1)
+	public Character getMultiLink() {
 		return this.multiLink;
 	}
 
-	public void setMultiLink(char multiLink) {
+	public void setMultiLink(Character multiLink) {
 		this.multiLink = multiLink;
 	}
 
-	@Column(name = "connect", nullable = false, length = 3)
+	@Column(name = "connect", length = 3)
 	public String getConnect() {
 		return this.connect;
 	}
@@ -212,7 +201,7 @@ public class Link implements java.io.Serializable {
 		this.remark = remark;
 	}
 
-	@Column(name = "road_type", nullable = false, length = 3)
+	@Column(name = "road_type", length = 10)
 	public String getRoadType() {
 		return this.roadType;
 	}
@@ -221,7 +210,7 @@ public class Link implements java.io.Serializable {
 		this.roadType = roadType;
 	}
 
-	@Column(name = "road_no", nullable = false, length = 5)
+	@Column(name = "road_no", length = 10)
 	public String getRoadNo() {
 		return this.roadNo;
 	}

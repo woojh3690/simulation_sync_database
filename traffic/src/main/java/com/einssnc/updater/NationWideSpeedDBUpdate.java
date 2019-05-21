@@ -1,54 +1,54 @@
 package com.einssnc.updater;
 
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.dao.DataIntegrityViolationException;
 
+import com.einssnc.dao.LinkDao;
 import com.einssnc.dao.NationWideSpeedDao;
 import com.einssnc.file.FileUrlDownload;
 import com.einssnc.file.HttpCaller;
 import com.einssnc.file.UnzipFile;
+import com.einssnc.model.Link;
 import com.einssnc.model.NationWideSpeed;
 import com.einssnc.model.NationWideSpeedId;
-import com.opencsv.CSVReader;
 
 public class NationWideSpeedDBUpdate 
-	implements DayUpdater, AsynchronousUpdater<NationWideSpeed, NationWideSpeedId>{
+	implements DayUpdater, 
+	AsynchronousUpdater {
 
 	private static final String baseUrl = "http://openapi.its.go.kr";
 	private static final String eachFileParamUrl = "/data/getEachFileDownload.do?path=%s_5Min.zip&name=%s_5Min.zip&type=traffic";
 	private static final String downloadParamUrl = "/data/getDownload.do?name=%s_5Min.zip&savename=%s";
 	private static final String key = "resultMsg";
 
-	// 데이터를 가지고 있는 최소한의 날짜와 최대의 날짜
-	private final Calendar minDate;
-	private final Calendar maxDate;
-
 	// 날짜형식
-	private final SimpleDateFormat format;
-	private final SimpleDateFormat tableDateFormat;
+	private final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+	private final SimpleDateFormat tableDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+	// 데이터를 가지고 있는 최소한의 날짜와 최대의 날짜
+	private final Calendar minDate = getCalendar(2018, 3, 1);
+	private final Calendar maxDate = Calendar.getInstance();
 
 	private String downloadDir; // 압축파일과 압축푼파일이 저장된 디렉토리
 	private String fileName; // 압축파일 이름
 
 	// 데이터들어가는 JpaRepository
-	//private NationWideSpeedDao dao;
+	NationWideSpeedDao dao;
+	LinkUpdater updater;
 	
-	public NationWideSpeedDBUpdate(String downloadDir, String filenName) {
-		this.downloadDir = downloadDir;//"C:/Temp";
-		this.fileName = filenName;//"nationWideSpeedData.zip";
-		this.format = new SimpleDateFormat("yyyyMMdd");
-		this.tableDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.minDate = getCalendar(2018, 3, 1);
-		this.maxDate = Calendar.getInstance();
+	public NationWideSpeedDBUpdate(NationWideSpeedDao dao, 
+			LinkUpdater updater, 
+			String downloadDir, 
+			String filenName) {
+		this.dao = dao;
+		this.updater = updater;
+		this.downloadDir = downloadDir;
+		this.fileName = filenName;
+
 		this.maxDate.add(Calendar.DATE, -1);
 	}
 	
@@ -57,16 +57,20 @@ public class NationWideSpeedDBUpdate
 		String strDate = format.format(date.getTime());
 
 		// 다운로드 받을 수 있는 url 요청
-		String finalEachFileUrl = baseUrl + String.format(eachFileParamUrl, strDate, strDate);
+		String finalEachFileUrl = baseUrl 
+				+ String.format(eachFileParamUrl, strDate, strDate);
 		HttpCaller caller = new HttpCaller();
 		String savename = caller.getUrlToJsonData(finalEachFileUrl, key);
 
 		if (!savename.equals("NoData")) {
 
 			// 압축 파일 다운로드
-			String finalDownloadUrl = baseUrl + String.format(downloadParamUrl, strDate, savename);
+			String finalDownloadUrl = baseUrl 
+					+ String.format(downloadParamUrl, strDate, savename);
 			FileUrlDownload fud = new FileUrlDownload();
-			fud.fileUrlReadAndDownload(finalDownloadUrl, fileName, downloadDir);
+			fud.fileUrlReadAndDownload(finalDownloadUrl, 
+					fileName, 
+					downloadDir);
 
 			// 압축파일 풀기
 			UnzipFile unzipfile = new UnzipFile();
@@ -101,7 +105,7 @@ public class NationWideSpeedDBUpdate
 	}
 
 	@Override
-	public NationWideSpeed buildBean(String[] str) {
+	public void buildBean(String[] str, int i) {
 		NationWideSpeedId id = new NationWideSpeedId();
 		id.setLinkId(str[1]);
 		try {
@@ -119,6 +123,21 @@ public class NationWideSpeedDBUpdate
 		entity.setDelayTime(Integer.parseInt(str[6]));
 		entity.setVehicleLength(Integer.parseInt(str[7]));
 		entity.setSensorShare(Integer.parseInt(str[8]));
-		return null;
+		
+		try {
+			dao.save(entity);
+		} catch (DataIntegrityViolationException e) {
+			System.out.println(i 
+					+ " 에서 오류" 
+					+ Arrays.toString(str));
+			updater.buildBack(str[0]);
+			dao.save(entity);
+		}
+	}
+
+	@Override
+	public void buildBack(String str) {
+		// TODO Auto-generated method stub
+		
 	}
 }
