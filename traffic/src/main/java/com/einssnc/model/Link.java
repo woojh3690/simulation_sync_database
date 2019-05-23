@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 21 ���� 10:28:14 by Hibernate Tools 5.2.12.Final
+// Generated 2019. 5. 23 ���� 10:52:08 by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,7 +35,6 @@ public class Link implements java.io.Serializable {
 	private String remark;
 	private String roadType;
 	private String roadNo;
-	private Set<NationWideSpeed> nationWideSpeeds = new HashSet<NationWideSpeed>(0);
 	private Set<Multilink> multilinks = new HashSet<Multilink>(0);
 	private Set<RealTimeTrafficJeju> realTimeTrafficJejus = new HashSet<RealTimeTrafficJeju>(0);
 
@@ -48,8 +47,8 @@ public class Link implements java.io.Serializable {
 
 	public Link(String linkId, Node nodeByFNode, Node nodeByTNode, Character roadUse, Integer lanes, String roadRank,
 			String roadName, Character multiLink, String connect, Integer maxSpd, String restVeh, Integer restW,
-			Integer restH, String remark, String roadType, String roadNo, Set<NationWideSpeed> nationWideSpeeds,
-			Set<Multilink> multilinks, Set<RealTimeTrafficJeju> realTimeTrafficJejus) {
+			Integer restH, String remark, String roadType, String roadNo, Set<Multilink> multilinks,
+			Set<RealTimeTrafficJeju> realTimeTrafficJejus) {
 		this.linkId = linkId;
 		this.nodeByFNode = nodeByFNode;
 		this.nodeByTNode = nodeByTNode;
@@ -66,7 +65,6 @@ public class Link implements java.io.Serializable {
 		this.remark = remark;
 		this.roadType = roadType;
 		this.roadNo = roadNo;
-		this.nationWideSpeeds = nationWideSpeeds;
 		this.multilinks = multilinks;
 		this.realTimeTrafficJejus = realTimeTrafficJejus;
 	}
@@ -217,15 +215,6 @@ public class Link implements java.io.Serializable {
 
 	public void setRoadNo(String roadNo) {
 		this.roadNo = roadNo;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "link")
-	public Set<NationWideSpeed> getNationWideSpeeds() {
-		return this.nationWideSpeeds;
-	}
-
-	public void setNationWideSpeeds(Set<NationWideSpeed> nationWideSpeeds) {
-		this.nationWideSpeeds = nationWideSpeeds;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "link")

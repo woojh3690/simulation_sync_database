@@ -106,33 +106,33 @@ public class NationWideSpeedDBUpdate
 
 	@Override
 	public void buildBean(String[] str, int i) {
-		NationWideSpeedId id = new NationWideSpeedId();
-		id.setLinkId(str[1]);
-		try {
-			id.setTime(tableDateFormat.parse(str[0]));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		NationWideSpeed entity = new NationWideSpeed();
-		entity.setId(id);
-		entity.setSpeed(Integer.parseInt(str[2]));
-		entity.setTrafficVolume(Integer.parseInt(str[3]));
-		entity.setDensity(Integer.parseInt(str[4]));
-		entity.setTravelTime(Integer.parseInt(str[5]));
-		entity.setDelayTime(Integer.parseInt(str[6]));
-		entity.setVehicleLength(Integer.parseInt(str[7]));
-		entity.setSensorShare(Integer.parseInt(str[8]));
-		
-		try {
-			dao.save(entity);
-		} catch (DataIntegrityViolationException e) {
-			System.out.println(i 
-					+ " 에서 오류" 
-					+ Arrays.toString(str));
-			updater.buildBack(str[0]);
-			dao.save(entity);
-		}
+//		NationWideSpeedId id = new NationWideSpeedId();
+//		id.setLinkId(str[1]);
+//		try {
+//			id.setTime(tableDateFormat.parse(str[0]));
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//
+//		NationWideSpeed entity = new NationWideSpeed();
+//		entity.setId(id);
+//		entity.setSpeed(Integer.parseInt(str[2]));
+//		entity.setTrafficVolume(Integer.parseInt(str[3]));
+//		entity.setDensity(Integer.parseInt(str[4]));
+//		entity.setTravelTime(Integer.parseInt(str[5]));
+//		entity.setDelayTime(Integer.parseInt(str[6]));
+//		entity.setVehicleLength(Integer.parseInt(str[7]));
+//		entity.setSensorShare(Integer.parseInt(str[8]));
+//		
+//		try {
+//			dao.save(entity);
+//		} catch (DataIntegrityViolationException e) {
+//			System.out.println(i 
+//					+ " 에서 오류" 
+//					+ Arrays.toString(str));
+//			updater.buildBack(str[0]);
+//			dao.save(entity);
+//		}
 	}
 
 	@Override

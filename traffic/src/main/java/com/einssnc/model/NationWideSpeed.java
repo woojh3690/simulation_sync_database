@@ -1,14 +1,11 @@
 package com.einssnc.model;
-// Generated 2019. 5. 21 ���� 10:28:14 by Hibernate Tools 5.2.12.Final
+// Generated 2019. 5. 23 ���� 10:52:08 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,7 +16,6 @@ import javax.persistence.Table;
 public class NationWideSpeed implements java.io.Serializable {
 
 	private NationWideSpeedId id;
-	private Link link;
 	private Integer speed;
 	private Integer trafficVolume;
 	private Integer density;
@@ -31,15 +27,13 @@ public class NationWideSpeed implements java.io.Serializable {
 	public NationWideSpeed() {
 	}
 
-	public NationWideSpeed(NationWideSpeedId id, Link link) {
+	public NationWideSpeed(NationWideSpeedId id) {
 		this.id = id;
-		this.link = link;
 	}
 
-	public NationWideSpeed(NationWideSpeedId id, Link link, Integer speed, Integer trafficVolume, Integer density,
+	public NationWideSpeed(NationWideSpeedId id, Integer speed, Integer trafficVolume, Integer density,
 			Integer travelTime, Integer delayTime, Integer vehicleLength, Integer sensorShare) {
 		this.id = id;
-		this.link = link;
 		this.speed = speed;
 		this.trafficVolume = trafficVolume;
 		this.density = density;
@@ -52,24 +46,14 @@ public class NationWideSpeed implements java.io.Serializable {
 	@EmbeddedId
 
 	@AttributeOverrides({
-			@AttributeOverride(name = "linkId", column = @Column(name = "link_id", nullable = false, length = 10)),
-			@AttributeOverride(name = "time", column = @Column(name = "time", nullable = false, length = 26)) })
+			@AttributeOverride(name = "time", column = @Column(name = "time", nullable = false, length = 26)),
+			@AttributeOverride(name = "linkId", column = @Column(name = "link_id", nullable = false, length = 10)) })
 	public NationWideSpeedId getId() {
 		return this.id;
 	}
 
 	public void setId(NationWideSpeedId id) {
 		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "link_id", nullable = false, insertable = false, updatable = false)
-	public Link getLink() {
-		return this.link;
-	}
-
-	public void setLink(Link link) {
-		this.link = link;
 	}
 
 	@Column(name = "speed")
