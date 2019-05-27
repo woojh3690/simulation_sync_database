@@ -16,9 +16,7 @@ import com.einssnc.model.Link;
 import com.einssnc.model.NationWideSpeed;
 import com.einssnc.model.NationWideSpeedId;
 
-public class NationWideSpeedDBUpdate 
-	implements DayUpdater, 
-	AsynchronousUpdater {
+public class NationWideSpeedDBUpdate implements DayUpdater {
 
 	private static final String baseUrl = "http://openapi.its.go.kr";
 	private static final String eachFileParamUrl = "/data/getEachFileDownload.do?path=%s_5Min.zip&name=%s_5Min.zip&type=traffic";
@@ -35,17 +33,10 @@ public class NationWideSpeedDBUpdate
 
 	private String downloadDir; // 압축파일과 압축푼파일이 저장된 디렉토리
 	private String fileName; // 압축파일 이름
-
-	// 데이터들어가는 JpaRepository
-	NationWideSpeedDao dao;
-	LinkUpdater updater;
 	
-	public NationWideSpeedDBUpdate(NationWideSpeedDao dao, 
-			LinkUpdater updater, 
+	public NationWideSpeedDBUpdate (
 			String downloadDir, 
 			String filenName) {
-		this.dao = dao;
-		this.updater = updater;
 		this.downloadDir = downloadDir;
 		this.fileName = filenName;
 
@@ -76,9 +67,11 @@ public class NationWideSpeedDBUpdate
 			UnzipFile unzipfile = new UnzipFile();
 			unzipfile.unzip(downloadDir, fileName, downloadDir);
 
+			CsvToMySqlUpdater updater = new CsvToMySqlUpdater();
+			updater.insert(strDate + "_5Min");
 			return true;
 		} else {
-			System.out.print(savename + "\n");
+			System.out.print(savename + " 날짜에 데이터 없음\n");
 			return false;
 		}
 
@@ -102,42 +95,5 @@ public class NationWideSpeedDBUpdate
 		date.set(Calendar.MONTH, month - 1);
 		date.set(Calendar.DAY_OF_MONTH, day);
 		return date;
-	}
-
-	@Override
-	public void buildBean(String[] str, int i) {
-//		NationWideSpeedId id = new NationWideSpeedId();
-//		id.setLinkId(str[1]);
-//		try {
-//			id.setTime(tableDateFormat.parse(str[0]));
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-//
-//		NationWideSpeed entity = new NationWideSpeed();
-//		entity.setId(id);
-//		entity.setSpeed(Integer.parseInt(str[2]));
-//		entity.setTrafficVolume(Integer.parseInt(str[3]));
-//		entity.setDensity(Integer.parseInt(str[4]));
-//		entity.setTravelTime(Integer.parseInt(str[5]));
-//		entity.setDelayTime(Integer.parseInt(str[6]));
-//		entity.setVehicleLength(Integer.parseInt(str[7]));
-//		entity.setSensorShare(Integer.parseInt(str[8]));
-//		
-//		try {
-//			dao.save(entity);
-//		} catch (DataIntegrityViolationException e) {
-//			System.out.println(i 
-//					+ " 에서 오류" 
-//					+ Arrays.toString(str));
-//			updater.buildBack(str[0]);
-//			dao.save(entity);
-//		}
-	}
-
-	@Override
-	public void buildBack(String str) {
-		// TODO Auto-generated method stub
-		
 	}
 }
