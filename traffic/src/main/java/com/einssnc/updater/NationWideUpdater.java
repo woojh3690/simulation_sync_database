@@ -1,22 +1,21 @@
 package com.einssnc.updater;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import org.hibernate.id.SequenceIdentityGenerator.Delegate;
 
 import com.einssnc.file.DeleteFile;
 import com.einssnc.file.FileUrlDownload;
 import com.einssnc.file.HttpCaller;
 import com.einssnc.file.UnzipFile;
 
-public class NationWideSpeedDBUpdate implements DayUpdater {
+public class NationWideUpdater implements DayUpdater {
 
 	private static final String baseUrl = "http://openapi.its.go.kr";
 	private static final String eachFileParamUrl = "/data/getEachFileDownload.do?path=%s_5Min.zip&name=%s_5Min.zip&type=traffic";
 	private static final String downloadParamUrl = "/data/getDownload.do?name=%s_5Min.zip&savename=%s";
 	private static final String key = "resultMsg";
+	
+	private static final String[] columns = {"time", "link_id", "speed", "traffic_volume", "density", "travel_time", "delay_time", "vehicle_length", "sensor_share"};
 
 	// 날짜형식
 	private final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -28,7 +27,7 @@ public class NationWideSpeedDBUpdate implements DayUpdater {
 	private String downloadDir; // 압축파일과 압축푼파일이 저장된 디렉토리
 	private String fileName; // 압축파일 이름
 
-	public NationWideSpeedDBUpdate(String downloadDir, String filenName) {
+	public NationWideUpdater(String downloadDir, String filenName) {
 		this.downloadDir = downloadDir;
 		this.fileName = filenName;
 		this.maxDate.add(Calendar.DATE, -1);
@@ -45,7 +44,6 @@ public class NationWideSpeedDBUpdate implements DayUpdater {
 		String savename = caller.getUrlToJsonData(finalEachFileUrl, key);
 
 		if (!savename.equals("NoData")) {
-
 			// 압축 파일 다운로드
 			String finalDownloadUrl = baseUrl + String.format(downloadParamUrl, strDate, savename);
 			FileUrlDownload fud = new FileUrlDownload();
@@ -53,13 +51,13 @@ public class NationWideSpeedDBUpdate implements DayUpdater {
 
 			// 압축파일 풀기
 			UnzipFile unzipfile = new UnzipFile();
-			unzipfile.unzip(downloadDir, fileName, downloadDir);
+			unzipfile.unzip(downloadDir, fileName, downloadDir, date);
 
-			//파일 데이터 베이스에 업로드
+			// 파일 데이터 베이스에 업로드
 			CsvToMySqlUpdater updater = new CsvToMySqlUpdater();
-			updater.insert(fullFileName);
-			
-			//완료한 파일 삭제
+			updater.insert(fullFileName, "nation_wide_speed", "0", columns);
+
+			// 완료한 파일 삭제
 			DeleteFile delete = new DeleteFile();
 			return delete.start(fullFileName);
 		} else {
