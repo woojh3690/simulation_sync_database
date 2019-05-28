@@ -19,7 +19,7 @@ public class Scheduler {
 	@Scheduled(fixedDelay=1000 * 60 * 60 * 60 * 60)//(cron = "0 0/30 8-20 * * *")
 	public void test() {
 		Calendar date = Calendar.getInstance();
-		date.set(2019, 4, 02);
+		date.set(2019, 4, 03);
 		NationWideSpeedDBUpdate updater = new NationWideSpeedDBUpdate("C:/Temp", "nationWideSpeedData.zip");
 		updater.insertOneDate(date);
 	}

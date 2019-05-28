@@ -1,20 +1,15 @@
 package com.einssnc.updater;
 
-import java.text.ParseException;
+import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 
-import org.springframework.dao.DataIntegrityViolationException;
+import org.hibernate.id.SequenceIdentityGenerator.Delegate;
 
-import com.einssnc.dao.LinkDao;
-import com.einssnc.dao.NationWideSpeedDao;
+import com.einssnc.file.DeleteFile;
 import com.einssnc.file.FileUrlDownload;
 import com.einssnc.file.HttpCaller;
 import com.einssnc.file.UnzipFile;
-import com.einssnc.model.Link;
-import com.einssnc.model.NationWideSpeed;
-import com.einssnc.model.NationWideSpeedId;
 
 public class NationWideSpeedDBUpdate implements DayUpdater {
 
@@ -25,51 +20,48 @@ public class NationWideSpeedDBUpdate implements DayUpdater {
 
 	// 날짜형식
 	private final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-	private final SimpleDateFormat tableDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
+
 	// 데이터를 가지고 있는 최소한의 날짜와 최대의 날짜
 	private final Calendar minDate = getCalendar(2018, 3, 1);
 	private final Calendar maxDate = Calendar.getInstance();
 
 	private String downloadDir; // 압축파일과 압축푼파일이 저장된 디렉토리
 	private String fileName; // 압축파일 이름
-	
-	public NationWideSpeedDBUpdate (
-			String downloadDir, 
-			String filenName) {
+
+	public NationWideSpeedDBUpdate(String downloadDir, String filenName) {
 		this.downloadDir = downloadDir;
 		this.fileName = filenName;
-
 		this.maxDate.add(Calendar.DATE, -1);
 	}
-	
+
 	@Override
 	public boolean insertOneDate(Calendar date) {
 		String strDate = format.format(date.getTime());
+		String fullFileName = downloadDir + "/" + strDate + "_5Min.csv";
 
 		// 다운로드 받을 수 있는 url 요청
-		String finalEachFileUrl = baseUrl 
-				+ String.format(eachFileParamUrl, strDate, strDate);
+		String finalEachFileUrl = baseUrl + String.format(eachFileParamUrl, strDate, strDate);
 		HttpCaller caller = new HttpCaller();
 		String savename = caller.getUrlToJsonData(finalEachFileUrl, key);
 
 		if (!savename.equals("NoData")) {
 
 			// 압축 파일 다운로드
-			String finalDownloadUrl = baseUrl 
-					+ String.format(downloadParamUrl, strDate, savename);
+			String finalDownloadUrl = baseUrl + String.format(downloadParamUrl, strDate, savename);
 			FileUrlDownload fud = new FileUrlDownload();
-			fud.fileUrlReadAndDownload(finalDownloadUrl, 
-					fileName, 
-					downloadDir);
+			fud.fileUrlReadAndDownload(finalDownloadUrl, fileName, downloadDir);
 
 			// 압축파일 풀기
 			UnzipFile unzipfile = new UnzipFile();
 			unzipfile.unzip(downloadDir, fileName, downloadDir);
 
+			//파일 데이터 베이스에 업로드
 			CsvToMySqlUpdater updater = new CsvToMySqlUpdater();
-			updater.insert(strDate + "_5Min");
-			return true;
+			updater.insert(fullFileName);
+			
+			//완료한 파일 삭제
+			DeleteFile delete = new DeleteFile();
+			return delete.start(fullFileName);
 		} else {
 			System.out.print(savename + " 날짜에 데이터 없음\n");
 			return false;

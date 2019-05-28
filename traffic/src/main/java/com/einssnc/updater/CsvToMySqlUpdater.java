@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 public class CsvToMySqlUpdater {
 	
-	private static final String baseSql = "LOAD DATA INFILE 'C:/Temp/%s.csv'\r\n" + 
+	private static final String baseSql = "LOAD DATA INFILE '%s'\r\n" + 
 			"INTO TABLE simulation.nation_wide_speed\r\n" + 
 			"CHARACTER SET utf8mb4\r\n" + 
 			"FIELDS\r\n" + 
@@ -15,7 +15,7 @@ public class CsvToMySqlUpdater {
 			"LINES TERMINATED BY '\\n'\r\n" + 
 			"IGNORE 0 LINES;";
 	
-	public void insert(String fileName) {
+	public void insert(String fullFileName) {
 		System.out.println("CsvToMySqlUpdater start");
 		Connection conn = null;
         Statement st = null;
@@ -35,7 +35,7 @@ public class CsvToMySqlUpdater {
 
 			st = conn.createStatement();
 			
-			String sql = String.format(baseSql, fileName);
+			String sql = String.format(baseSql, fullFileName);
 			System.out.println("insert 시작\n"+sql);
 			
 			rs = st.executeUpdate(sql);
