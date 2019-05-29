@@ -5,8 +5,11 @@ import java.util.Arrays;
 public class MultiLinkUpdater {
 	private static final String[] columns = {"multi_id", "link_id", 
 			"road_rank", "road_type", "road_no", "road_name", "remark"};
+	public String fullFileName;
 	
-	public static final String fullFileName = "C:/Temp/nodelink1/multilink.csv";
+	public MultiLinkUpdater(String dir) {
+		this.fullFileName = dir + "multilink.csv";
+	}
 	
 	public boolean start() {
 		CsvToMySqlUpdater updater = new CsvToMySqlUpdater();

@@ -13,6 +13,8 @@ import com.einssnc.updater.TurnInfoUpdater;
 
 @Component
 public class Scheduler {
+	
+	private static final String dir = "C:/Temp/nodelink/";
 
 	public Scheduler() {
 
@@ -25,10 +27,10 @@ public class Scheduler {
 	
 	private void nationInsert() {
 		
-		new NodeUpdater().start();
-		new TurnInfoUpdater().start();
-		new LinkUpdater().start();
-		new MultiLinkUpdater().start();
+		new NodeUpdater(dir).start();
+		new TurnInfoUpdater(dir).start();
+		new LinkUpdater(dir).start();
+		new MultiLinkUpdater(dir).start();
 		
 		Calendar start = Calendar.getInstance();
 		start.set(2019, 4, 1);

@@ -3,12 +3,16 @@ package com.einssnc.updater;
 import java.util.Arrays;
 
 public class LinkUpdater {
+	
 	public static final String[] columns = {"link_id", "f_node", "t_node", 
 			"road_use", "lanes", "road_rank", "road_name", "multi_link", 
 			"connect", "max_spd", "rest_veh", "rest_w", "rest_h", "remark", 
 			"road_type", "road_no"};
+	private String fullFileName;
 	
-	public static final String fullFileName = "C:/Temp/nodelink1/link.csv";
+	public LinkUpdater(String dir) {
+		this.fullFileName = dir + "link.csv";
+	}
 	
 	public boolean start() {
 		CsvToMySqlUpdater updater = new CsvToMySqlUpdater();
