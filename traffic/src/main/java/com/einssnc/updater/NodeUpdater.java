@@ -5,7 +5,7 @@ public class NodeUpdater {
 	
 	public boolean start() {
 		CsvToMySqlUpdater updater = new CsvToMySqlUpdater();
-		updater.insert("C:/Temp/nodelink/node.csv", "node", "1", columns);
+		updater.update("C:/Temp/nodelink1/node.csv", "node", "1", columns);
 		return true;
 	}
 }

@@ -55,7 +55,7 @@ public class NationWideUpdater implements DayUpdater {
 
 			// 파일 데이터 베이스에 업로드
 			CsvToMySqlUpdater updater = new CsvToMySqlUpdater();
-			updater.insert(fullFileName, "nation_wide_speed", "0", columns);
+			updater.update(fullFileName, "nation_wide_speed", "0", columns);
 
 			// 완료한 파일 삭제
 			DeleteFile delete = new DeleteFile();
