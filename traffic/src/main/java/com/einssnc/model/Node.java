@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 23 ���� 10:52:08 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 5. 29 ���� 1:40:38 by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +20,7 @@ public class Node implements java.io.Serializable {
 	private String nodeId;
 	private String nodeType;
 	private String nodeName;
-	private char turnP;
+	private Character turnP;
 	private String remark;
 	private String userId;
 	private Integer workstate;
@@ -35,14 +35,11 @@ public class Node implements java.io.Serializable {
 	public Node() {
 	}
 
-	public Node(String nodeId, String nodeType, String nodeName, char turnP) {
+	public Node(String nodeId) {
 		this.nodeId = nodeId;
-		this.nodeType = nodeType;
-		this.nodeName = nodeName;
-		this.turnP = turnP;
 	}
 
-	public Node(String nodeId, String nodeType, String nodeName, char turnP, String remark, String userId,
+	public Node(String nodeId, String nodeType, String nodeName, Character turnP, String remark, String userId,
 			Integer workstate, Integer deptCode, Integer stnlReg, String tmpid, String uploadId,
 			Set<Link> linksForFNode, Set<Link> linksForTNode, Set<Turninfo> turninfos) {
 		this.nodeId = nodeId;
@@ -72,7 +69,7 @@ public class Node implements java.io.Serializable {
 		this.nodeId = nodeId;
 	}
 
-	@Column(name = "node_type", nullable = false, length = 3)
+	@Column(name = "node_type", length = 3)
 	public String getNodeType() {
 		return this.nodeType;
 	}
@@ -81,7 +78,7 @@ public class Node implements java.io.Serializable {
 		this.nodeType = nodeType;
 	}
 
-	@Column(name = "node_name", nullable = false, length = 100)
+	@Column(name = "node_name", length = 100)
 	public String getNodeName() {
 		return this.nodeName;
 	}
@@ -90,12 +87,12 @@ public class Node implements java.io.Serializable {
 		this.nodeName = nodeName;
 	}
 
-	@Column(name = "turn_p", nullable = false, length = 1)
-	public char getTurnP() {
+	@Column(name = "turn_p", length = 1)
+	public Character getTurnP() {
 		return this.turnP;
 	}
 
-	public void setTurnP(char turnP) {
+	public void setTurnP(Character turnP) {
 		this.turnP = turnP;
 	}
 

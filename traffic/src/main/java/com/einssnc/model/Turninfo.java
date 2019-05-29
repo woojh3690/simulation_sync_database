@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 23 ���� 10:52:08 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 5. 29 ���� 1:40:38 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -23,22 +23,18 @@ public class Turninfo implements java.io.Serializable {
 	private String stLink;
 	private String edLink;
 	private String turnType;
-	private char turnOper;
+	private Character turnOper;
 	private String remark;
 
 	public Turninfo() {
 	}
 
-	public Turninfo(TurninfoId id, Node node, String stLink, String edLink, String turnType, char turnOper) {
+	public Turninfo(TurninfoId id, Node node) {
 		this.id = id;
 		this.node = node;
-		this.stLink = stLink;
-		this.edLink = edLink;
-		this.turnType = turnType;
-		this.turnOper = turnOper;
 	}
 
-	public Turninfo(TurninfoId id, Node node, String stLink, String edLink, String turnType, char turnOper,
+	public Turninfo(TurninfoId id, Node node, String stLink, String edLink, String turnType, Character turnOper,
 			String remark) {
 		this.id = id;
 		this.node = node;
@@ -72,7 +68,7 @@ public class Turninfo implements java.io.Serializable {
 		this.node = node;
 	}
 
-	@Column(name = "st_link", nullable = false, length = 10)
+	@Column(name = "st_link", length = 10)
 	public String getStLink() {
 		return this.stLink;
 	}
@@ -81,7 +77,7 @@ public class Turninfo implements java.io.Serializable {
 		this.stLink = stLink;
 	}
 
-	@Column(name = "ed_link", nullable = false, length = 10)
+	@Column(name = "ed_link", length = 10)
 	public String getEdLink() {
 		return this.edLink;
 	}
@@ -90,7 +86,7 @@ public class Turninfo implements java.io.Serializable {
 		this.edLink = edLink;
 	}
 
-	@Column(name = "turn_type", nullable = false, length = 3)
+	@Column(name = "turn_type", length = 3)
 	public String getTurnType() {
 		return this.turnType;
 	}
@@ -99,12 +95,12 @@ public class Turninfo implements java.io.Serializable {
 		this.turnType = turnType;
 	}
 
-	@Column(name = "turn_oper", nullable = false, length = 1)
-	public char getTurnOper() {
+	@Column(name = "turn_oper", length = 1)
+	public Character getTurnOper() {
 		return this.turnOper;
 	}
 
-	public void setTurnOper(char turnOper) {
+	public void setTurnOper(Character turnOper) {
 		this.turnOper = turnOper;
 	}
 

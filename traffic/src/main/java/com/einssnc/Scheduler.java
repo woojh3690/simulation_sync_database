@@ -30,14 +30,14 @@ public class Scheduler {
 		new LinkUpdater().start();
 		new MultiLinkUpdater().start();
 		
-//		Calendar start = Calendar.getInstance();
-//		start.set(2019, 4, 1);
-//
-//		Calendar end = Calendar.getInstance();
-//		end.set(2019, 4, 1);
-//		
-//		NationWideUpdater nationUpdater = new NationWideUpdater("C:/Temp", "nationWideSpeedData.zip");
-//		nationUpdater.insertPastData(start, end);
+		Calendar start = Calendar.getInstance();
+		start.set(2019, 4, 1);
+
+		Calendar end = Calendar.getInstance();
+		end.set(2019, 4, 1);
+		
+		NationWideUpdater nationUpdater = new NationWideUpdater("C:/Temp", "nationWideSpeedData.zip");
+		nationUpdater.insertPastData(start, end);
 	}
 
 }

@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 23 ���� 10:52:08 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 5. 29 ���� 1:40:38 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -16,13 +16,6 @@ import javax.persistence.Table;
 public class NationWideSpeed implements java.io.Serializable {
 
 	private NationWideSpeedId id;
-	private Integer speed;
-	private Integer trafficVolume;
-	private Integer density;
-	private Integer travelTime;
-	private Integer delayTime;
-	private Integer vehicleLength;
-	private Integer sensorShare;
 
 	public NationWideSpeed() {
 	}
@@ -31,92 +24,24 @@ public class NationWideSpeed implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public NationWideSpeed(NationWideSpeedId id, Integer speed, Integer trafficVolume, Integer density,
-			Integer travelTime, Integer delayTime, Integer vehicleLength, Integer sensorShare) {
-		this.id = id;
-		this.speed = speed;
-		this.trafficVolume = trafficVolume;
-		this.density = density;
-		this.travelTime = travelTime;
-		this.delayTime = delayTime;
-		this.vehicleLength = vehicleLength;
-		this.sensorShare = sensorShare;
-	}
-
 	@EmbeddedId
 
 	@AttributeOverrides({
 			@AttributeOverride(name = "time", column = @Column(name = "time", nullable = false, length = 26)),
-			@AttributeOverride(name = "linkId", column = @Column(name = "link_id", nullable = false, length = 10)) })
+			@AttributeOverride(name = "linkId", column = @Column(name = "link_id", nullable = false, length = 10)),
+			@AttributeOverride(name = "speed", column = @Column(name = "speed")),
+			@AttributeOverride(name = "trafficVolume", column = @Column(name = "traffic_volume")),
+			@AttributeOverride(name = "density", column = @Column(name = "density")),
+			@AttributeOverride(name = "travelTime", column = @Column(name = "travel_time")),
+			@AttributeOverride(name = "delayTime", column = @Column(name = "delay_time")),
+			@AttributeOverride(name = "vehicleLength", column = @Column(name = "vehicle_length")),
+			@AttributeOverride(name = "sensorShare", column = @Column(name = "sensor_share")) })
 	public NationWideSpeedId getId() {
 		return this.id;
 	}
 
 	public void setId(NationWideSpeedId id) {
 		this.id = id;
-	}
-
-	@Column(name = "speed")
-	public Integer getSpeed() {
-		return this.speed;
-	}
-
-	public void setSpeed(Integer speed) {
-		this.speed = speed;
-	}
-
-	@Column(name = "traffic_volume")
-	public Integer getTrafficVolume() {
-		return this.trafficVolume;
-	}
-
-	public void setTrafficVolume(Integer trafficVolume) {
-		this.trafficVolume = trafficVolume;
-	}
-
-	@Column(name = "density")
-	public Integer getDensity() {
-		return this.density;
-	}
-
-	public void setDensity(Integer density) {
-		this.density = density;
-	}
-
-	@Column(name = "travel_time")
-	public Integer getTravelTime() {
-		return this.travelTime;
-	}
-
-	public void setTravelTime(Integer travelTime) {
-		this.travelTime = travelTime;
-	}
-
-	@Column(name = "delay_time")
-	public Integer getDelayTime() {
-		return this.delayTime;
-	}
-
-	public void setDelayTime(Integer delayTime) {
-		this.delayTime = delayTime;
-	}
-
-	@Column(name = "vehicle_length")
-	public Integer getVehicleLength() {
-		return this.vehicleLength;
-	}
-
-	public void setVehicleLength(Integer vehicleLength) {
-		this.vehicleLength = vehicleLength;
-	}
-
-	@Column(name = "sensor_share")
-	public Integer getSensorShare() {
-		return this.sensorShare;
-	}
-
-	public void setSensorShare(Integer sensorShare) {
-		this.sensorShare = sensorShare;
 	}
 
 }
