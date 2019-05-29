@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 29 ���� 1:40:38 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 5. 29 ���� 4:56:10 by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;

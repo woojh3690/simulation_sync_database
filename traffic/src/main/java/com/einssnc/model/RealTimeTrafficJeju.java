@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 29 ���� 1:40:38 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 5. 29 ���� 4:56:10 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -41,7 +41,7 @@ public class RealTimeTrafficJeju implements java.io.Serializable {
 
 	@AttributeOverrides({
 			@AttributeOverride(name = "linkId", column = @Column(name = "link_id", nullable = false, length = 10)),
-			@AttributeOverride(name = "prcnDt", column = @Column(name = "prcn_dt", nullable = false)) })
+			@AttributeOverride(name = "prcnDt", column = @Column(name = "prcn_dt", nullable = false, length = 26)) })
 	public RealTimeTrafficJejuId getId() {
 		return this.id;
 	}

@@ -2,17 +2,27 @@ package com.einssnc;
 
 import java.util.Calendar;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.einssnc.dao.LinkDao;
+import com.einssnc.dao.RealTimeTrafficJejuDao;
 import com.einssnc.updater.LinkUpdater;
 import com.einssnc.updater.MultiLinkUpdater;
 import com.einssnc.updater.NationWideUpdater;
 import com.einssnc.updater.NodeUpdater;
+import com.einssnc.updater.RealTimeTrafficJejuUpdater;
 import com.einssnc.updater.TurnInfoUpdater;
 
 @Component
 public class Scheduler {
+	
+	@Autowired
+	RealTimeTrafficJejuDao dao;
+	
+	@Autowired
+	LinkDao linkDao;
 	
 	private static final String dir = "C:/Temp/nodelink/";
 
@@ -22,7 +32,8 @@ public class Scheduler {
 
 	@Scheduled(fixedDelay = 1000 * 60 * 60 * 60 * 60) // (cron = "0 0/30 8-20 * * *")
 	public void test() {
-		nationInsert();
+		RealTimeTrafficJejuUpdater updater = new RealTimeTrafficJejuUpdater(dao, linkDao);
+		updater.start();
 	}
 	
 	private void nationInsert() {

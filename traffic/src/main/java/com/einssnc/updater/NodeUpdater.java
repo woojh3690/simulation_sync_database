@@ -9,6 +9,7 @@ public class NodeUpdater {
 	public NodeUpdater(String dir) {
 		this.fullFileName = dir + "node.csv";
 	}
+	
 	public boolean start() {
 		CsvToMySqlUpdater updater = new CsvToMySqlUpdater();
 		updater.update(fullFileName, "node", "1", columns);

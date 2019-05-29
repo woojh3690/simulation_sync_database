@@ -11,6 +11,7 @@ public class TurnInfoUpdater {
 	public TurnInfoUpdater(String dir) {
 		this.fullFileName = dir + "turninfo.csv";
 	}
+	
 	public boolean start() {
 		CsvToMySqlUpdater updater = new CsvToMySqlUpdater();
 		

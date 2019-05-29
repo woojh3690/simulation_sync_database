@@ -2,24 +2,35 @@ package com.einssnc.file;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 public class HttpCaller {
-	private static String resultMsg;
 
 	/**
 	 * url에서 json 텍스트를 가져온다음 정해진 key 값의 데이터를 반환
 	 * 
 	 * @param url
-	 * @param key
 	 * @return
 	 */
-	public String getUrlToJsonData(String url, String key) {
-		resultMsg = "NoData";
+	public String getUrlToData(String type, String url) {
+		String resultMsg = "NoData";
 		URL obj;
 
 		try {
@@ -27,7 +38,7 @@ public class HttpCaller {
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
 			// 패킷헤더 작성
-			con.setRequestMethod("POST");
+			con.setRequestMethod(type);
 			con.setRequestProperty("Content-Type", "application/json");
 
 			// 전송
@@ -46,16 +57,15 @@ public class HttpCaller {
 				}
 				in.close();
 
-				// json 형식에 데이터 중애서 resultMsg에 값만 가져오기
-				JsonParser json = new JsonParser();
-				JsonElement element = json.parse(response.toString());
-				resultMsg = element.getAsJsonObject().get(key).getAsString();
-				System.out.println(resultMsg);
+				resultMsg = response.toString();
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		//System.out.println(resultMsg);
 		return resultMsg;
 	}
+
 }
