@@ -13,10 +13,14 @@ import com.einssnc.updater.MultiLinkUpdater;
 import com.einssnc.updater.NationWideUpdater;
 import com.einssnc.updater.NodeUpdater;
 import com.einssnc.updater.RealTimeTrafficJejuUpdater;
+import com.einssnc.updater.Setting;
 import com.einssnc.updater.TurnInfoUpdater;
 
 @Component
 public class Scheduler {
+	
+	public static final int LOCAL = Setting.LOCAL_SERVER;
+	public static final int REMOTE = Setting.REMOTE_SERVER;
 	
 	@Autowired
 	RealTimeTrafficJejuDao dao;
@@ -24,11 +28,10 @@ public class Scheduler {
 	@Autowired
 	LinkDao linkDao;
 	
-	// /data/backup/nodelink/
-	private static final String dir = "/data/nodelink/";//C:/Temp/nodelink/
+	private String dir;
 
 	public Scheduler() {
-
+		this.dir = new Setting().getDir();
 	}
 
 	@Scheduled(fixedDelay = 1000 * 60 * 60 * 60 * 60) // (cron = "0 0/30 8-20 * * *")
@@ -38,21 +41,21 @@ public class Scheduler {
 	
 	private void nationInsert() {
 		
-//		new NodeUpdater(dir).start();
+		new NodeUpdater(dir).start();
 //		new TurnInfoUpdater(dir).start();
 //		new LinkUpdater(dir).start();
 //		new MultiLinkUpdater(dir).start();
 //		
 //		new RealTimeTrafficJejuUpdater(dao, linkDao).start();
 		
-		Calendar start = Calendar.getInstance();
-		start.set(2019, 4, 1);
-
-		Calendar end = Calendar.getInstance();
-		end.set(2019, 4, 1);
-		
-		NationWideUpdater nationUpdater = new NationWideUpdater("C:/Temp", "nationWideSpeedData.zip");
-		nationUpdater.insertPastData(start, end);
+//		Calendar start = Calendar.getInstance();
+//		start.set(2019, 4, 1);
+//
+//		Calendar end = Calendar.getInstance();
+//		end.set(2019, 4, 1);
+//		
+//		NationWideUpdater nationUpdater = new NationWideUpdater(dir, "nationWideSpeedData.zip");
+//		nationUpdater.insertPastData(start, end);
 	}
 
 }

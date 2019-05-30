@@ -39,7 +39,7 @@ public class NationWideUpdater implements DayUpdater {
 	@Override
 	public boolean insertOneDate(Calendar date) {
 		String strDate = format.format(date.getTime());
-		String fullFileName = downloadDir + "/" + strDate + "_5Min.csv";
+		String fullFileName = downloadDir + strDate + "_5Min.csv";
 
 		// 다운로드 받을 수 있는 url 요청
 		String finalEachFileUrl = baseUrl + String.format(eachFileParamUrl, strDate, strDate);

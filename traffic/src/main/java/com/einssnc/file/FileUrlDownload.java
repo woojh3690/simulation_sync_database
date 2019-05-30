@@ -37,7 +37,7 @@ public class FileUrlDownload {
 			// 웹에서 읽어올 스트림 생성 - 일반 파일을 읽는 경우
 			is = conn.getInputStream();
 			// 파일에 기록할 스트림 생성
-			fos = new FileOutputStream(downloadDir + "\\" + localFileName);
+			fos = new FileOutputStream(downloadDir + localFileName);
 
 			while (true) {
 				// is 에서 읽어서 raster에 젖ㅇ하고 읽은 마지막위치를 read에 ㅈ장

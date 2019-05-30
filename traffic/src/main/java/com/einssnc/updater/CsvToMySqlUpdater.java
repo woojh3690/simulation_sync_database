@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class CsvToMySqlUpdater {
 	
-	private static final String infileBase = "LOAD DATA LOCAL INFILE '%s'\r\n" + 
+	private static final String infileBase = "LOAD DATA%s INFILE '%s'\r\n" + 
 			"IGNORE INTO TABLE simulation.%s\r\n" + 
 			"CHARACTER SET euckr\r\n" + 
 			"FIELDS\r\n" + 
@@ -24,6 +24,7 @@ public class CsvToMySqlUpdater {
 	
 	private void insert(String fullFileName, String table, String ignoreLine, 
 			String[] columns, String[] select) {
+		Setting setting = new Setting();
 		System.out.println("CsvToMySqlUpdater start");
 		Connection conn = null;
         Statement st = null;
@@ -33,25 +34,24 @@ public class CsvToMySqlUpdater {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
 			Properties props = new Properties();
-		    props.put("user", "woojh3690");
+		    props.put("user", setting.getUser());
 		    props.put("password", "woojh1138!");
 		    //props.put("--local-infile", 1);
 		    
-			conn = DriverManager.getConnection(
-					"jdbc:mysql://wooserver.iptime.org/simulation?serverTimezone=UTC", props);
+		    String url = "jdbc:mysql://%s/simulation?serverTimezone=UTC";
+		    url = String.format(url, setting.getUrl()); //환경에 따라 주소 세팅
+		    System.out.println("연결 시작 : " + url);
+		    
+			conn = DriverManager.getConnection(url, props);
 			st = conn.createStatement();
 			
-			ResultSet result = st.executeQuery("SHOW GLOBAL VARIABLES LIKE 'local_infile';");
-			
-			while (result.next() ) {
-				System.out.println(result.getString("Value"));
-				
-			}
-			
-			System.out.println("\n\ninsert 시작");
-			rs = st.executeUpdate(setQuery(fullFileName, table, ignoreLine, columns, select));
-			System.out.println(rs + " : insert됨");
+//			ResultSet result = st.executeQuery("SHOW GLOBAL VARIABLES LIKE 'local_infile';");
+//			
+//			while (result.next() ) {
+//				System.out.println(result.getString("Value"));
+//			}
 
+			rs = st.executeUpdate(setQuery(fullFileName, table, ignoreLine, columns, select));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -67,7 +67,7 @@ public class CsvToMySqlUpdater {
 			}
 		}
 		
-		System.out.println("CsvToMySqlUpdater finish");
+		System.out.println(rs + " : insert됨");
 	}
 	
 	/**
@@ -78,8 +78,8 @@ public class CsvToMySqlUpdater {
 	 * @param columns
 	 * @return
 	 */
-	public String setQuery(String fullFileName, String table, String ignoreLine, 
-			String[] columns, String[] select) {
+	public String setQuery(String fullFileName, String table, 
+			String ignoreLine, String[] columns, String[] select) {
 		
 		//컬럼 쿼리
 		String columnQuery = "(";
@@ -97,7 +97,11 @@ public class CsvToMySqlUpdater {
 		setQuery = replaceLast(setQuery, ",\r\n", ";");
 		
 		//최종 쿼리
-		String infileQuery = String.format(infileBase, fullFileName, table, ignoreLine);
+		String infileQuery = String.format(infileBase, 
+				new Setting().getInfile(),
+				fullFileName, 
+				table, 
+				ignoreLine);
 		infileQuery = infileQuery + columnQuery + setQuery;
 		System.out.print(infileQuery);
 		return infileQuery;

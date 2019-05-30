@@ -14,7 +14,7 @@ import com.einssnc.updater.NationWideUpdater;
 public class UnzipFile {
 	
     public void unzip(String fileZipDir, String fileName, String destinationDir, Calendar date) {
-    	String fileZip = fileZipDir + "\\" + fileName;
+    	String fileZip = fileZipDir + fileName;
     	
     	FileOutputStream fos = null;
     	ZipInputStream zis = null;
