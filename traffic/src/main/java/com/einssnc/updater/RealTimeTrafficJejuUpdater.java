@@ -1,7 +1,6 @@
 package com.einssnc.updater;
 
 import java.io.StringReader;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

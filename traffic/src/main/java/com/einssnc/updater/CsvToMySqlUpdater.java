@@ -1,14 +1,17 @@
 package com.einssnc.updater;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class CsvToMySqlUpdater {
 	
-	private static final String infileBase = "LOAD DATA INFILE '%s'\r\n" + 
+	private static final String infileBase = "LOAD DATA LOCAL INFILE '%s'\r\n" + 
 			"IGNORE INTO TABLE simulation.%s\r\n" + 
 			"CHARACTER SET euckr\r\n" + 
 			"FIELDS\r\n" + 
@@ -28,11 +31,22 @@ public class CsvToMySqlUpdater {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			Properties props = new Properties();
+		    props.put("user", "woojh3690");
+		    props.put("password", "woojh1138!");
+		    //props.put("--local-infile", 1);
+		    
 			conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost/simulation?serverTimezone=UTC", 
-					"root", 
-					"woojh1138!");
+					"jdbc:mysql://wooserver.iptime.org/simulation?serverTimezone=UTC", props);
 			st = conn.createStatement();
+			
+			ResultSet result = st.executeQuery("SHOW GLOBAL VARIABLES LIKE 'local_infile';");
+			
+			while (result.next() ) {
+				System.out.println(result.getString("Value"));
+				
+			}
 			
 			System.out.println("\n\ninsert 시작");
 			rs = st.executeUpdate(setQuery(fullFileName, table, ignoreLine, columns, select));
@@ -123,7 +137,7 @@ public class CsvToMySqlUpdater {
 			String[] columns, String[] select, String id) {
 		
 		List<String> idColumns = new ArrayList<String>();
-		for (String _ : columns) {
+		for ( String _ : columns) {
 			idColumns.add(id);
 		}
 		idColumn = idColumns.toArray(new String[0]);

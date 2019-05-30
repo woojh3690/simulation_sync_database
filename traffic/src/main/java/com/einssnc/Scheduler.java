@@ -24,7 +24,8 @@ public class Scheduler {
 	@Autowired
 	LinkDao linkDao;
 	
-	private static final String dir = "C:/Temp/nodelink/";
+	// /data/backup/nodelink/
+	private static final String dir = "/data/nodelink/";//C:/Temp/nodelink/
 
 	public Scheduler() {
 
@@ -32,16 +33,17 @@ public class Scheduler {
 
 	@Scheduled(fixedDelay = 1000 * 60 * 60 * 60 * 60) // (cron = "0 0/30 8-20 * * *")
 	public void test() {
-		RealTimeTrafficJejuUpdater updater = new RealTimeTrafficJejuUpdater(dao, linkDao);
-		updater.start();
+		nationInsert();
 	}
 	
 	private void nationInsert() {
 		
-		new NodeUpdater(dir).start();
-		new TurnInfoUpdater(dir).start();
-		new LinkUpdater(dir).start();
-		new MultiLinkUpdater(dir).start();
+//		new NodeUpdater(dir).start();
+//		new TurnInfoUpdater(dir).start();
+//		new LinkUpdater(dir).start();
+//		new MultiLinkUpdater(dir).start();
+//		
+//		new RealTimeTrafficJejuUpdater(dao, linkDao).start();
 		
 		Calendar start = Calendar.getInstance();
 		start.set(2019, 4, 1);
