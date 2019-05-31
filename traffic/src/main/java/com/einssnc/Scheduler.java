@@ -19,7 +19,7 @@ import com.einssnc.updater.TurnInfoUpdater;
 public class Scheduler {
 	
 	public static final int LOCAL = Setting.LOCAL_CLIENT;
-	public static final int REMOTE = Setting.REMOTE_CLIENT;
+	public static final int REMOTE = Setting.REMOTE_SERVER;
 	
 	@Autowired
 	RealTimeTrafficJejuDao dao;
@@ -45,17 +45,17 @@ public class Scheduler {
 //		new TurnInfoUpdater(dir).start();
 //		new LinkUpdater(dir).start();
 //		new MultiLinkUpdater(dir).start();
-		
-		new RealTimeTrafficJejuUpdater(dao, linkDao).start();
-		
-//		Calendar start = Calendar.getInstance();
-//		start.set(2019, 4, 1);
-//
-//		Calendar end = Calendar.getInstance();
-//		end.set(2019, 4, 1);
 //		
-//		NationWideUpdater nationUpdater = new NationWideUpdater(dir, "nationWideSpeedData.zip");
-//		nationUpdater.insertPastData(start, end);
+//		new RealTimeTrafficJejuUpdater(dao, linkDao).start();
+		
+		Calendar start = Calendar.getInstance();
+		start.set(2019, 4, 1);
+
+		Calendar end = Calendar.getInstance();
+		end.set(2019, 4, 1);
+		
+		NationWideUpdater nationUpdater = new NationWideUpdater(dir, "nationWideSpeedData.zip");
+		nationUpdater.insertPastData(start, end);
 	}
 
 }

@@ -36,7 +36,7 @@ public class CsvToMySqlUpdater {
 			Properties props = new Properties();
 		    props.put("user", setting.getUser());
 		    props.put("password", "woojh1138!");
-		    //props.put("--local-infile", 1);
+		    props.put("allowLoadLocalInfile", "TRUE");
 		    
 		    String url = "jdbc:mysql://%s/simulation?serverTimezone=UTC";
 		    url = String.format(url, setting.getUrl()); //환경에 따라 주소 세팅
