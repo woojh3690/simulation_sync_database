@@ -1,19 +1,19 @@
 package com.einssnc.updater;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.einssnc.Setting;
+
 public class CsvToMySqlUpdater {
 	
 	private static final String infileBase = "LOAD DATA%s INFILE '%s'\r\n" + 
 			"IGNORE INTO TABLE simulation.%s\r\n" + 
-			"CHARACTER SET euckr\r\n" + 
+			"CHARACTER SET %s\r\n" + 
 			"FIELDS\r\n" + 
 			"    TERMINATED BY ','\r\n" + 
 			"    OPTIONALLY ENCLOSED BY '\"'\r\n" + 
@@ -25,7 +25,7 @@ public class CsvToMySqlUpdater {
 	private void insert(String fullFileName, String table, String ignoreLine, 
 			String[] columns, String[] select) {
 		Setting setting = new Setting();
-		System.out.println("CsvToMySqlUpdater start");
+		System.out.println("\nCsvToMySqlUpdater start");
 		Connection conn = null;
         Statement st = null;
         Integer rs = null;
@@ -44,13 +44,6 @@ public class CsvToMySqlUpdater {
 		    
 			conn = DriverManager.getConnection(url, props);
 			st = conn.createStatement();
-			
-//			ResultSet result = st.executeQuery("SHOW GLOBAL VARIABLES LIKE 'local_infile';");
-//			
-//			while (result.next() ) {
-//				System.out.println(result.getString("Value"));
-//			}
-
 			rs = st.executeUpdate(setQuery(fullFileName, table, ignoreLine, columns, select));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,10 +90,12 @@ public class CsvToMySqlUpdater {
 		setQuery = replaceLast(setQuery, ",\r\n", ";");
 		
 		//최종 쿼리
+		Setting setting = new Setting();
 		String infileQuery = String.format(infileBase, 
-				new Setting().getInfile(),
+				setting.getInfile(),
 				fullFileName, 
-				table, 
+				table,
+				setting.getEncoding(),
 				ignoreLine);
 		infileQuery = infileQuery + columnQuery + setQuery;
 		System.out.print(infileQuery);
@@ -139,13 +134,11 @@ public class CsvToMySqlUpdater {
 	
 	public void update(String fullFileName, String table, String ignoreLine, 
 			String[] columns, String[] select, String id) {
-		
 		List<String> idColumns = new ArrayList<String>();
 		for ( String _ : columns) {
 			idColumns.add(id);
 		}
 		idColumn = idColumns.toArray(new String[0]);
-		
 		insert(fullFileName, table, ignoreLine, columns, select);
 	}
 }

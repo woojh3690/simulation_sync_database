@@ -1,6 +1,4 @@
-package com.einssnc.updater;
-
-import com.einssnc.Scheduler;
+package com.einssnc;
 
 public class Setting {
 	
@@ -21,7 +19,7 @@ public class Setting {
 	public String getDir() {
 		switch (CUR_LOCAL) {
 		case LOCAL_CLIENT:
-			return "C:/Temp/nodelink/";
+			return "C:/Temp/WGS84/";
 		case LOCAL_SERVER:
 			return "/data/nodelink/";
 		default:
@@ -30,6 +28,9 @@ public class Setting {
 	}
 	
 	public String getInfile() {
+		if (CUR_LOCAL == LOCAL_CLIENT && CUR_REMOTE == REMOTE_CLIENT) {
+			return " ";
+		}
 		switch (CUR_LOCAL) {
 		case LOCAL_CLIENT:
 			return " LOCAL";
@@ -57,6 +58,17 @@ public class Setting {
 			return "root";
 		case REMOTE_SERVER:
 			return "woojh3690";
+		default:
+			return "?";
+		}
+	}
+	
+	public String getEncoding() {
+		switch (CUR_REMOTE) {
+		case REMOTE_CLIENT:
+			return "euckr";
+		case REMOTE_SERVER:
+			return "euckr";
 		default:
 			return "?";
 		}

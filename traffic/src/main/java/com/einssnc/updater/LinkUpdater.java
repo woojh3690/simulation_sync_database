@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class LinkUpdater {
 	
-	public static final String[] columns = {"link_id", "f_node", "t_node", 
+	public static final String[] columns = {"xys", "link_id", "f_node", "t_node", 
 			"road_use", "lanes", "road_rank", "road_name", "multi_link", 
 			"connect", "max_spd", "rest_veh", "rest_w", "rest_h", "remark", 
 			"road_type", "road_no"};
