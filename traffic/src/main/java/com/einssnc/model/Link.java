@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 31 ���� 9:03:40 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 4 ���� 4:06:44 by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +35,7 @@ public class Link implements java.io.Serializable {
 	private String remark;
 	private String roadType;
 	private String roadNo;
+	private String xys;
 	private Set<Multilink> multilinks = new HashSet<Multilink>(0);
 	private Set<RealTimeTrafficJeju> realTimeTrafficJejus = new HashSet<RealTimeTrafficJeju>(0);
 
@@ -47,7 +48,7 @@ public class Link implements java.io.Serializable {
 
 	public Link(String linkId, Node nodeByFNode, Node nodeByTNode, Character roadUse, Integer lanes, String roadRank,
 			String roadName, Character multiLink, String connect, Integer maxSpd, String restVeh, Integer restW,
-			Integer restH, String remark, String roadType, String roadNo, Set<Multilink> multilinks,
+			Integer restH, String remark, String roadType, String roadNo, String xys, Set<Multilink> multilinks,
 			Set<RealTimeTrafficJeju> realTimeTrafficJejus) {
 		this.linkId = linkId;
 		this.nodeByFNode = nodeByFNode;
@@ -65,6 +66,7 @@ public class Link implements java.io.Serializable {
 		this.remark = remark;
 		this.roadType = roadType;
 		this.roadNo = roadNo;
+		this.xys = xys;
 		this.multilinks = multilinks;
 		this.realTimeTrafficJejus = realTimeTrafficJejus;
 	}
@@ -215,6 +217,15 @@ public class Link implements java.io.Serializable {
 
 	public void setRoadNo(String roadNo) {
 		this.roadNo = roadNo;
+	}
+
+	@Column(name = "xys", length = 65535)
+	public String getXys() {
+		return this.xys;
+	}
+
+	public void setXys(String xys) {
+		this.xys = xys;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "link")

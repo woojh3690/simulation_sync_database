@@ -47,13 +47,13 @@ public class NationWideUpdater implements DayUpdater {
 
 		if (!savename.equals("NoData")) {
 			// 압축 파일 다운로드
-//			String finalDownloadUrl = baseUrl + String.format(downloadParamUrl, strDate, savename);
-//			FileUrlDownload fud = new FileUrlDownload();
-//			fud.fileUrlReadAndDownload(finalDownloadUrl, fileName, downloadDir);
+			String finalDownloadUrl = baseUrl + String.format(downloadParamUrl, strDate, savename);
+			FileUrlDownload fud = new FileUrlDownload();
+			fud.fileUrlReadAndDownload(finalDownloadUrl, fileName, downloadDir);
 
-			// 압축파일 풀기
-//			UnzipFile unzipfile = new UnzipFile();
-//			unzipfile.unzip(downloadDir, fileName, downloadDir, date);
+//			 압축파일 풀기
+			UnzipFile unzipfile = new UnzipFile();
+			unzipfile.unzip(downloadDir, fileName, downloadDir, date);
 
 			// 파일 데이터 베이스에 업로드
 			CsvToMySqlUpdater updater = new CsvToMySqlUpdater();

@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 31 ���� 9:03:40 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 4 ���� 4:06:44 by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +28,7 @@ public class Node implements java.io.Serializable {
 	private Integer stnlReg;
 	private String tmpid;
 	private String uploadId;
+	private String xy;
 	private Set<Link> linksForFNode = new HashSet<Link>(0);
 	private Set<Link> linksForTNode = new HashSet<Link>(0);
 	private Set<Turninfo> turninfos = new HashSet<Turninfo>(0);
@@ -40,7 +41,7 @@ public class Node implements java.io.Serializable {
 	}
 
 	public Node(String nodeId, String nodeType, String nodeName, Character turnP, String remark, String userId,
-			Integer workstate, Integer deptCode, Integer stnlReg, String tmpid, String uploadId,
+			Integer workstate, Integer deptCode, Integer stnlReg, String tmpid, String uploadId, String xy,
 			Set<Link> linksForFNode, Set<Link> linksForTNode, Set<Turninfo> turninfos) {
 		this.nodeId = nodeId;
 		this.nodeType = nodeType;
@@ -53,6 +54,7 @@ public class Node implements java.io.Serializable {
 		this.stnlReg = stnlReg;
 		this.tmpid = tmpid;
 		this.uploadId = uploadId;
+		this.xy = xy;
 		this.linksForFNode = linksForFNode;
 		this.linksForTNode = linksForTNode;
 		this.turninfos = turninfos;
@@ -157,6 +159,15 @@ public class Node implements java.io.Serializable {
 
 	public void setUploadId(String uploadId) {
 		this.uploadId = uploadId;
+	}
+
+	@Column(name = "xy", length = 65535)
+	public String getXy() {
+		return this.xy;
+	}
+
+	public void setXy(String xy) {
+		this.xy = xy;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeByFNode")

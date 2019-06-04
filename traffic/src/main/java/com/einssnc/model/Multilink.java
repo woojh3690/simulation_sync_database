@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 5. 31 ���� 9:03:40 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 4 ���� 4:06:44 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
