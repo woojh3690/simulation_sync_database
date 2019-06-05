@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 6. 5 ���� 10:44:49 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 5 ���� 12:36:18 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +35,7 @@ public class BusStop implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "nodeid", unique = true, nullable = false, length = 12)
+	@Column(name = "nodeid", unique = true, nullable = false, length = 15)
 	public String getNodeid() {
 		return this.nodeid;
 	}
