@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 6. 5 ���� 3:46:00 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 5 ���� 5:12:42 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

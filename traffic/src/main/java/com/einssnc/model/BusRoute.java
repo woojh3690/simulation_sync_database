@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 6. 5 ���� 3:46:00 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 5 ���� 5:12:42 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +18,7 @@ public class BusRoute implements java.io.Serializable {
 
 	private String routeid;
 	private CityCode cityCode;
-	private Integer routeno;
+	private String routeno;
 	private String routetp;
 	private String startnodenm;
 	private String endnodenm;
@@ -31,7 +31,7 @@ public class BusRoute implements java.io.Serializable {
 		this.cityCode = cityCode;
 	}
 
-	public BusRoute(String routeid, CityCode cityCode, Integer routeno, String routetp, String startnodenm,
+	public BusRoute(String routeid, CityCode cityCode, String routeno, String routetp, String startnodenm,
 			String endnodenm) {
 		this.routeid = routeid;
 		this.cityCode = cityCode;
@@ -62,12 +62,12 @@ public class BusRoute implements java.io.Serializable {
 		this.cityCode = cityCode;
 	}
 
-	@Column(name = "routeno")
-	public Integer getRouteno() {
+	@Column(name = "routeno", length = 100)
+	public String getRouteno() {
 		return this.routeno;
 	}
 
-	public void setRouteno(Integer routeno) {
+	public void setRouteno(String routeno) {
 		this.routeno = routeno;
 	}
 

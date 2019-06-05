@@ -12,7 +12,6 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -27,7 +26,6 @@ public class BusRouteUpdater {
 
 	private int count;
 	private int numOfRows = 10000;
-//	private String[] columns = {"routeid", "routeno", "routetp", "startnodenm", "endnodenm"};
 
 	private static final String baseUrl = "http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getRouteNoList?serviceKey=qV1LziLSWQEOHoSfyNMNyC4f%2FyXOaW4Yo%2BmJjjBqxT5yOIXNhbkh5TtrfnKZbX97pYeBFGqKlMd0FQlCcTgnwg%3D%3D";
 	private static final String param = "&cityCode=%s&numOfRows=%s&pageNo=%s";
@@ -88,7 +86,7 @@ public class BusRouteUpdater {
 				if (column.getNodeName().equals("routeid")) {
 					entity.setRouteid(column.getTextContent());
 				} else if (column.getNodeName().equals("routeno")) {
-					entity.setRouteno(Integer.parseInt(column.getTextContent()));
+					entity.setRouteno(column.getTextContent());
 				} else if (column.getNodeName().equals("routetp")) {
 					entity.setRoutetp(column.getTextContent());
 				} else if (column.getNodeName().equals("startnodenm")) {
