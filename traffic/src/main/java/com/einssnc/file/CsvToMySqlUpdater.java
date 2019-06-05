@@ -1,4 +1,4 @@
-package com.einssnc.updater;
+package com.einssnc.file;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

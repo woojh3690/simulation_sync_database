@@ -9,7 +9,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
 
-import com.einssnc.updater.NationWideUpdater;
+import com.einssnc.updater.realtime.NationWideUpdater;
 
 public class UnzipFile {
 	

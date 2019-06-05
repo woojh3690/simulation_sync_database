@@ -1,4 +1,4 @@
-package com.einssnc.updater;
+package com.einssnc.updater.astatic;
 
 import java.io.StringReader;
 import java.util.ArrayList;

@@ -1,6 +1,8 @@
-package com.einssnc.updater;
+package com.einssnc.updater.astatic;
 
 import java.util.Arrays;
+
+import com.einssnc.file.CsvToMySqlUpdater;
 
 public class JejuBusStopUpdater {
 

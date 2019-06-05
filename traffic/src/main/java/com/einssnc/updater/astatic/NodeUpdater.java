@@ -1,4 +1,6 @@
-package com.einssnc.updater;
+package com.einssnc.updater.astatic;
+
+import com.einssnc.file.CsvToMySqlUpdater;
 
 public class NodeUpdater {
 	

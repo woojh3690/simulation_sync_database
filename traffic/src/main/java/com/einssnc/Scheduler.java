@@ -12,15 +12,15 @@ import com.einssnc.dao.LinkDao;
 import com.einssnc.dao.RealTimeTrafficJejuDao;
 import com.einssnc.model.BusStop;
 import com.einssnc.model.JejuBusStop;
-import com.einssnc.updater.BusStopUpdater;
-import com.einssnc.updater.CityCodeUpdater;
-import com.einssnc.updater.JejuBusStopUpdater;
-import com.einssnc.updater.LinkUpdater;
-import com.einssnc.updater.MultiLinkUpdater;
-import com.einssnc.updater.NationWideUpdater;
-import com.einssnc.updater.NodeUpdater;
-import com.einssnc.updater.RealTimeTrafficJejuUpdater;
-import com.einssnc.updater.TurnInfoUpdater;
+import com.einssnc.updater.astatic.BusStopUpdater;
+import com.einssnc.updater.astatic.CityCodeUpdater;
+import com.einssnc.updater.astatic.JejuBusStopUpdater;
+import com.einssnc.updater.astatic.LinkUpdater;
+import com.einssnc.updater.astatic.MultiLinkUpdater;
+import com.einssnc.updater.astatic.NodeUpdater;
+import com.einssnc.updater.astatic.TurnInfoUpdater;
+import com.einssnc.updater.realtime.NationWideUpdater;
+import com.einssnc.updater.realtime.RealTimeTrafficJejuUpdater;
 
 @Component
 public class Scheduler {

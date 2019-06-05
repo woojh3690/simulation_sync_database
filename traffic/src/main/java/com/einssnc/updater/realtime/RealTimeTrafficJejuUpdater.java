@@ -1,4 +1,4 @@
-package com.einssnc.updater;
+package com.einssnc.updater.realtime;
 
 import java.io.StringReader;
 import java.text.ParseException;

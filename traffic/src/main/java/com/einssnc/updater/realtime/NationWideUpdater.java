@@ -1,12 +1,14 @@
-package com.einssnc.updater;
+package com.einssnc.updater.realtime;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.einssnc.file.CsvToMySqlUpdater;
 import com.einssnc.file.DeleteFile;
 import com.einssnc.file.FileUrlDownload;
 import com.einssnc.file.HttpCaller;
 import com.einssnc.file.UnzipFile;
+import com.einssnc.updater.DayUpdater;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
