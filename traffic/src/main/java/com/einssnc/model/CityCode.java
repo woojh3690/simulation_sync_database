@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 6. 5 ���� 3:01:20 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 5 ���� 3:07:26 by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +20,7 @@ public class CityCode implements java.io.Serializable {
 	private int citycode;
 	private String cityname;
 	private Set<BusStop> busStops = new HashSet<BusStop>(0);
+	private Set<BusRoute> busRoutes = new HashSet<BusRoute>(0);
 
 	public CityCode() {
 	}
@@ -29,10 +30,11 @@ public class CityCode implements java.io.Serializable {
 		this.cityname = cityname;
 	}
 
-	public CityCode(int citycode, String cityname, Set<BusStop> busStops) {
+	public CityCode(int citycode, String cityname, Set<BusStop> busStops, Set<BusRoute> busRoutes) {
 		this.citycode = citycode;
 		this.cityname = cityname;
 		this.busStops = busStops;
+		this.busRoutes = busRoutes;
 	}
 
 	@Id
@@ -62,6 +64,15 @@ public class CityCode implements java.io.Serializable {
 
 	public void setBusStops(Set<BusStop> busStops) {
 		this.busStops = busStops;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cityCode")
+	public Set<BusRoute> getBusRoutes() {
+		return this.busRoutes;
+	}
+
+	public void setBusRoutes(Set<BusRoute> busRoutes) {
+		this.busRoutes = busRoutes;
 	}
 
 }

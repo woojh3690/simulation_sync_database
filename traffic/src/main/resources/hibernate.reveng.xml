@@ -2,14 +2,20 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-
-<table-filter match-name="bus_stop" match-catalog="simulation"></table-filter>
+	<table-filter match-name="bus_route" match-catalog="simulation"></table-filter>
+	<table-filter match-name="bus_stop" match-catalog="simulation"></table-filter>
 	<table-filter match-name="city_code" match-catalog="simulation"></table-filter>
+	<table-filter match-name="jeju_bus_stop"
+		match-catalog="simulation">
+	</table-filter>
 	<table-filter match-name="link" match-catalog="simulation"></table-filter>
 	<table-filter match-name="multilink" match-catalog="simulation"></table-filter>
-	<table-filter match-name="nation_wide_speed" match-catalog="simulation"></table-filter>
+	<table-filter match-name="nation_wide_speed"
+		match-catalog="simulation">
+	</table-filter>
 	<table-filter match-name="node" match-catalog="simulation"></table-filter>
-	<table-filter match-name="real_time_traffic_jeju" match-catalog="simulation"></table-filter>
+	<table-filter match-name="real_time_traffic_jeju"
+		match-catalog="simulation">
+	</table-filter>
 	<table-filter match-name="turninfo" match-catalog="simulation"></table-filter>
-	<table-filter match-name="jeju_bus_stop" match-catalog="simulation"></table-filter>
 </hibernate-reverse-engineering>
