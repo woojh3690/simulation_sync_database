@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.einssnc.dao.BusStopDao;
 import com.einssnc.dao.CityCodeDao;
 import com.einssnc.dao.LinkDao;
 import com.einssnc.dao.RealTimeTrafficJejuDao;
+import com.einssnc.model.BusStop;
 import com.einssnc.model.JejuBusStop;
+import com.einssnc.updater.BusStopUpdater;
 import com.einssnc.updater.CityCodeUpdater;
 import com.einssnc.updater.JejuBusStopUpdater;
 import com.einssnc.updater.LinkUpdater;
@@ -34,6 +37,9 @@ public class Scheduler {
 	@Autowired
 	CityCodeDao cityDao;
 	
+	@Autowired
+	BusStopDao busStopDao;
+	
 	private String dir;
 
 	public Scheduler() {
@@ -54,7 +60,8 @@ public class Scheduler {
 //		new MultiLinkUpdater(dir).start();
 //		new JejuBusStopUpdater(dir).start();
 		
-		new CityCodeUpdater(cityDao).start();
+//		new CityCodeUpdater(cityDao).start();
+		new BusStopUpdater(cityDao, busStopDao).start();
 		
 //		
 //		new RealTimeTrafficJejuUpdater(dao, linkDao).start();

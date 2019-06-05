@@ -59,7 +59,7 @@ public class RealTimeTrafficJejuUpdater {
 			List<RealTimeTrafficJeju> daoList = new ArrayList<RealTimeTrafficJeju>();
 			
 			count = nodeList.getLength();
-			for (int i = 0; i < nodeList.getLength(); i++) {
+			for (int i = 0; i < count; i++) {
 				NodeList child = nodeList.item(i).getChildNodes();
 				try {
 					dao.save(getEntity(child));

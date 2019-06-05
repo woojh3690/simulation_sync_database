@@ -51,7 +51,7 @@ public class CityCodeUpdater {
 			List<CityCode> daoList = new ArrayList<CityCode>();
 			
 			count = nodeList.getLength();
-			for (int i = 0; i < nodeList.getLength(); i++) {
+			for (int i = 0; i < count; i++) {
 				NodeList child = nodeList.item(i).getChildNodes();
 				CityCode citycode = new CityCode();
 				citycode.setCitycode(childToInt(child, 0));
