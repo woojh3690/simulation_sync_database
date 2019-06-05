@@ -27,6 +27,7 @@ public class BusRouteUpdater {
 
 	private int count;
 	private int numOfRows = 10000;
+//	private String[] columns = {"routeid", "routeno", "routetp", "startnodenm", "endnodenm"};
 
 	private static final String baseUrl = "http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getRouteNoList?serviceKey=qV1LziLSWQEOHoSfyNMNyC4f%2FyXOaW4Yo%2BmJjjBqxT5yOIXNhbkh5TtrfnKZbX97pYeBFGqKlMd0FQlCcTgnwg%3D%3D";
 	private static final String param = "&cityCode=%s&numOfRows=%s&pageNo=%s";
@@ -77,24 +78,30 @@ public class BusRouteUpdater {
 
 		count = nodeList.getLength();
 		for (int i = 0; i < count; i++) {
-			NodeList child = nodeList.item(i).getChildNodes();
-			NamedNodeMap node = nodeList.item(i).getAttributes();
-			try {
-				BusRoute entity = new BusRoute();
-				entity.setRouteid(node.getNamedItem("routeid").getTextContent());
-				entity.setRouteno(childToInt(child, 2));
-				entity.setRoutetp(child.item(3).getTextContent());
-				entity.setStartnodenm(child.item(4).getTextContent());
-				entity.setEndnodenm(child.item(0).getTextContent());
-
-				CityCode cityCode = new CityCode();
-				cityCode.setCitycode(cityNum);
-				entity.setCityCode(cityCode);
+			NodeList columns = nodeList.item(i).getChildNodes();
+			BusRoute entity = new BusRoute();
+			
+			int len = columns.getLength();
+			for (int j = 0; j < len; j++) {
 				
-				daoList.add(entity);
-			} catch (NullPointerException e) {
-				System.out.println(child.item(0).toString() + " 제외됨");
+				Node column = columns.item(j);
+				if (column.getNodeName().equals("routeid")) {
+					entity.setRouteid(column.getTextContent());
+				} else if (column.getNodeName().equals("routeno")) {
+					entity.setRouteno(Integer.parseInt(column.getTextContent()));
+				} else if (column.getNodeName().equals("routetp")) {
+					entity.setRoutetp(column.getTextContent());
+				} else if (column.getNodeName().equals("startnodenm")) {
+					entity.setStartnodenm(column.getTextContent());
+				} else if (column.getNodeName().equals("endnodenm")) {
+					entity.setEndnodenm(column.getTextContent());
+				}
 			}
+			CityCode cityCode = new CityCode();
+			cityCode.setCitycode(cityNum);
+			entity.setCityCode(cityCode);
+			
+			daoList.add(entity);
 		}
 		dao.saveAll(daoList); // 전부 저장
 
@@ -106,14 +113,4 @@ public class BusRouteUpdater {
 			return true;
 		}
 	}
-
-	private int childToInt(NodeList child, int index) {
-		String temp = child.item(index).getTextContent();
-		return Integer.parseInt(temp);
-	}
-
-//	private double childToDouble(NodeList child, int index) {
-//		String temp = child.item(index).getTextContent();
-//		return Double.parseDouble(temp);
-//	}
 }
