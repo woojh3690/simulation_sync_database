@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 6. 4 ���� 4:06:44 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 5 ���� 10:44:49 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,34 +16,32 @@ import javax.persistence.Table;
 @Table(name = "bus_stop", catalog = "simulation")
 public class BusStop implements java.io.Serializable {
 
-	private String nodeno;
-	private CityCode cityCode;
 	private String nodeid;
+	private CityCode cityCode;
 	private String nodenm;
-	private int gpslati;
-	private int gpslong;
+	private double lon;
+	private double lat;
 
 	public BusStop() {
 	}
 
-	public BusStop(String nodeno, CityCode cityCode, String nodeid, String nodenm, int gpslati, int gpslong) {
-		this.nodeno = nodeno;
-		this.cityCode = cityCode;
+	public BusStop(String nodeid, CityCode cityCode, String nodenm, double lon, double lat) {
 		this.nodeid = nodeid;
+		this.cityCode = cityCode;
 		this.nodenm = nodenm;
-		this.gpslati = gpslati;
-		this.gpslong = gpslong;
+		this.lon = lon;
+		this.lat = lat;
 	}
 
 	@Id
 
-	@Column(name = "nodeno", unique = true, nullable = false, length = 30)
-	public String getNodeno() {
-		return this.nodeno;
+	@Column(name = "nodeid", unique = true, nullable = false, length = 12)
+	public String getNodeid() {
+		return this.nodeid;
 	}
 
-	public void setNodeno(String nodeno) {
-		this.nodeno = nodeno;
+	public void setNodeid(String nodeid) {
+		this.nodeid = nodeid;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -56,16 +54,7 @@ public class BusStop implements java.io.Serializable {
 		this.cityCode = cityCode;
 	}
 
-	@Column(name = "nodeid", nullable = false, length = 30)
-	public String getNodeid() {
-		return this.nodeid;
-	}
-
-	public void setNodeid(String nodeid) {
-		this.nodeid = nodeid;
-	}
-
-	@Column(name = "nodenm", nullable = false, length = 30)
+	@Column(name = "nodenm", nullable = false, length = 100)
 	public String getNodenm() {
 		return this.nodenm;
 	}
@@ -74,22 +63,22 @@ public class BusStop implements java.io.Serializable {
 		this.nodenm = nodenm;
 	}
 
-	@Column(name = "gpslati", nullable = false)
-	public int getGpslati() {
-		return this.gpslati;
+	@Column(name = "lon", nullable = false, precision = 22, scale = 0)
+	public double getLon() {
+		return this.lon;
 	}
 
-	public void setGpslati(int gpslati) {
-		this.gpslati = gpslati;
+	public void setLon(double lon) {
+		this.lon = lon;
 	}
 
-	@Column(name = "gpslong", nullable = false)
-	public int getGpslong() {
-		return this.gpslong;
+	@Column(name = "lat", nullable = false, precision = 22, scale = 0)
+	public double getLat() {
+		return this.lat;
 	}
 
-	public void setGpslong(int gpslong) {
-		this.gpslong = gpslong;
+	public void setLat(double lat) {
+		this.lat = lat;
 	}
 
 }
