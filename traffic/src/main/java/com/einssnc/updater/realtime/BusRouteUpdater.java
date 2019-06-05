@@ -12,6 +12,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
@@ -76,9 +78,10 @@ public class BusRouteUpdater {
 		count = nodeList.getLength();
 		for (int i = 0; i < count; i++) {
 			NodeList child = nodeList.item(i).getChildNodes();
+			NamedNodeMap node = nodeList.item(i).getAttributes();
 			try {
 				BusRoute entity = new BusRoute();
-				entity.setRouteid(child.item(1).getTextContent());
+				entity.setRouteid(node.getNamedItem("routeid").getTextContent());
 				entity.setRouteno(childToInt(child, 2));
 				entity.setRoutetp(child.item(3).getTextContent());
 				entity.setStartnodenm(child.item(4).getTextContent());

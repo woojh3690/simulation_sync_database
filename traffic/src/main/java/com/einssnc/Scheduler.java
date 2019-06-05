@@ -67,7 +67,7 @@ public class Scheduler {
 		
 //		new CityCodeUpdater(cityDao).start();
 //		new BusStopUpdater(cityDao, busStopDao).start();
-		new BusRouteUpdater(cityDao, busRouteDao);
+		new BusRouteUpdater(cityDao, busRouteDao).start();
 		
 //		
 //		new RealTimeTrafficJejuUpdater(dao, linkDao).start();

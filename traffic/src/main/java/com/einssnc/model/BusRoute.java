@@ -1,5 +1,5 @@
 package com.einssnc.model;
-// Generated 2019. 6. 5 ���� 3:07:26 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 5 ���� 3:46:00 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +18,7 @@ public class BusRoute implements java.io.Serializable {
 
 	private String routeid;
 	private CityCode cityCode;
-	private int routeno;
+	private Integer routeno;
 	private String routetp;
 	private String startnodenm;
 	private String endnodenm;
@@ -26,7 +26,12 @@ public class BusRoute implements java.io.Serializable {
 	public BusRoute() {
 	}
 
-	public BusRoute(String routeid, CityCode cityCode, int routeno, String routetp, String startnodenm,
+	public BusRoute(String routeid, CityCode cityCode) {
+		this.routeid = routeid;
+		this.cityCode = cityCode;
+	}
+
+	public BusRoute(String routeid, CityCode cityCode, Integer routeno, String routetp, String startnodenm,
 			String endnodenm) {
 		this.routeid = routeid;
 		this.cityCode = cityCode;
@@ -57,16 +62,16 @@ public class BusRoute implements java.io.Serializable {
 		this.cityCode = cityCode;
 	}
 
-	@Column(name = "routeno", nullable = false)
-	public int getRouteno() {
+	@Column(name = "routeno")
+	public Integer getRouteno() {
 		return this.routeno;
 	}
 
-	public void setRouteno(int routeno) {
+	public void setRouteno(Integer routeno) {
 		this.routeno = routeno;
 	}
 
-	@Column(name = "routetp", nullable = false, length = 20)
+	@Column(name = "routetp", length = 20)
 	public String getRoutetp() {
 		return this.routetp;
 	}
@@ -75,7 +80,7 @@ public class BusRoute implements java.io.Serializable {
 		this.routetp = routetp;
 	}
 
-	@Column(name = "startnodenm", nullable = false, length = 50)
+	@Column(name = "startnodenm", length = 50)
 	public String getStartnodenm() {
 		return this.startnodenm;
 	}
@@ -84,7 +89,7 @@ public class BusRoute implements java.io.Serializable {
 		this.startnodenm = startnodenm;
 	}
 
-	@Column(name = "endnodenm", nullable = false, length = 50)
+	@Column(name = "endnodenm", length = 50)
 	public String getEndnodenm() {
 		return this.endnodenm;
 	}
