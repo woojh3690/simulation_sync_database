@@ -41,7 +41,7 @@ public class BusStopUpdater {
 		
 		try {
 			List<CityCode> citys = cityDao.findAll();
-			for (CityCode city : citys) {
+			for (CityCode city : citys.subList(citys.size() - 2, citys.size())) {
 				for (int i = 1; getAndInsert(city.getCitycode(), i); i++) {
 					System.out.print(city.getCityname() + " : " + i + "번째 완료.");
 				}
@@ -88,7 +88,7 @@ public class BusStopUpdater {
 				busStop.setCityCode(cityCode);
 				daoList.add(busStop);
 			} catch (NullPointerException e) {
-				System.out.println(child.toString());
+				System.out.println(child.item(0).toString() + " 제외됨");
 			}
 		}
 		dao.saveAll(daoList); // 전부 저장
