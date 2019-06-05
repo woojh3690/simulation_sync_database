@@ -41,7 +41,7 @@ public class BusRouteUpdater {
 		
 		try {
 			List<CityCode> citys = cityDao.findAll();
-			for (CityCode city : citys.subList(citys.size() - 2, citys.size())) {
+			for (CityCode city : citys) {
 				for (int i = 1; getAndInsert(city.getCitycode(), i); i++) {
 					System.out.print(city.getCityname() + " : " + i + "번째 완료.");
 				}
