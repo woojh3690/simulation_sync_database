@@ -59,7 +59,7 @@ public class Scheduler {
 	
 	private void nationInsert() {
 		
-//		new NodeUpdater(dir).start();
+		new NodeUpdater(dir).start();
 //		new TurnInfoUpdater(dir).start();
 //		new LinkUpdater(dir).start();
 //		new MultiLinkUpdater(dir).start();
@@ -67,7 +67,7 @@ public class Scheduler {
 		
 //		new CityCodeUpdater(cityDao).start();
 //		new BusStopUpdater(cityDao, busStopDao).start();
-		new BusRouteUpdater(cityDao, busRouteDao).start();
+		//new BusRouteUpdater(cityDao, busRouteDao).start();
 		
 //		
 //		new RealTimeTrafficJejuUpdater(dao, linkDao).start();
