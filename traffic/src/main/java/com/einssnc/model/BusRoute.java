@@ -1,12 +1,15 @@
 package com.einssnc.model;
-// Generated 2019. 6. 5 ���� 5:12:42 by Hibernate Tools 4.3.5.Final
+// Generated 2019. 6. 7 ���� 9:32:56 by Hibernate Tools 4.3.5.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -22,6 +25,7 @@ public class BusRoute implements java.io.Serializable {
 	private String routetp;
 	private String startnodenm;
 	private String endnodenm;
+	private Set<BusLocation> busLocations = new HashSet<BusLocation>(0);
 
 	public BusRoute() {
 	}
@@ -32,13 +36,14 @@ public class BusRoute implements java.io.Serializable {
 	}
 
 	public BusRoute(String routeid, CityCode cityCode, String routeno, String routetp, String startnodenm,
-			String endnodenm) {
+			String endnodenm, Set<BusLocation> busLocations) {
 		this.routeid = routeid;
 		this.cityCode = cityCode;
 		this.routeno = routeno;
 		this.routetp = routetp;
 		this.startnodenm = startnodenm;
 		this.endnodenm = endnodenm;
+		this.busLocations = busLocations;
 	}
 
 	@Id
@@ -96,6 +101,15 @@ public class BusRoute implements java.io.Serializable {
 
 	public void setEndnodenm(String endnodenm) {
 		this.endnodenm = endnodenm;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "busRoute")
+	public Set<BusLocation> getBusLocations() {
+		return this.busLocations;
+	}
+
+	public void setBusLocations(Set<BusLocation> busLocations) {
+		this.busLocations = busLocations;
 	}
 
 }
