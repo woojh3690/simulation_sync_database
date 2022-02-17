@@ -27,7 +27,7 @@ public class BusRouteUpdater {
 	private int count;
 	private int numOfRows = 10000;
 
-	private static final String baseUrl = "http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getRouteNoList?serviceKey=qV1LziLSWQEOHoSfyNMNyC4f%2FyXOaW4Yo%2BmJjjBqxT5yOIXNhbkh5TtrfnKZbX97pYeBFGqKlMd0FQlCcTgnwg%3D%3D";
+	private static final String baseUrl = "http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getRouteNoList?serviceKey=%s";
 	private static final String param = "&cityCode=%s&numOfRows=%s&pageNo=%s";
 
 	private CityCodeDao cityDao;
